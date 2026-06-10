@@ -186,7 +186,6 @@ export default function Home() {
           .from("players")
           .select("id, player_name, country_of_birth, player_image_url, date_of_birth")
           .ilike("search_name", `%${cleanSearch}%`)
-          // FIX: Changed nullsLast to nullsFirst: false to satisfy TypeScript!
           .order("date_of_birth", { ascending: true, nullsFirst: false }) 
           .limit(20);
 
@@ -233,7 +232,6 @@ export default function Home() {
         return;
       }
 
-      // Fast, direct ID match using ALL columns to avoid CSV spacing bugs
       const { data: performances, error: perfError } = await supabase
         .from("player_performances")
         .select("*")
@@ -300,23 +298,24 @@ export default function Home() {
   const handleRouteSelect = (nextClub: Club) => {
     if (!routingPlayer) return;
     
-    let totalDestinationApps = 0;
+    let totalCurrentClubApps = 0;
 
+    // We now filter based on currentClub.name, scoring the player for their history at the club you are routing out of.
     if (activePlayerPerformances.length > 0) {
       const sampleRow = activePlayerPerformances[0];
       const safeTeamKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase() === 'team_name') || 'team_name';
       const safePitchKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase().includes('pitch') || k.trim().toLowerCase().includes('appearances')) || 'nb_on_pitch';
 
-      totalDestinationApps = activePlayerPerformances
-        .filter(p => p[safeTeamKey] && checkClubMatch(String(p[safeTeamKey]), nextClub.name))
+      totalCurrentClubApps = activePlayerPerformances
+        .filter(p => p[safeTeamKey] && checkClubMatch(String(p[safeTeamKey]), currentClub.name))
         .reduce((sum, current) => sum + (Number(current[safePitchKey]) || 0), 0);
     }
 
-    const rarity = calculateSlidingScalePoints(totalDestinationApps);
+    const rarity = calculateSlidingScalePoints(totalCurrentClubApps);
     
     const newChain = [
       ...chain, 
-      { player: routingPlayer, fromClub: currentClub, toClub: nextClub, rarity, appearances: totalDestinationApps }
+      { player: routingPlayer, fromClub: currentClub, toClub: nextClub, rarity, appearances: totalCurrentClubApps }
     ];
     
     setChain(newChain);
@@ -407,7 +406,7 @@ export default function Home() {
                   <span>📈</span> The Obscurity Sliding Scale
                 </h3>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  Points are calculated dynamically on a rolling mathematical curve based on the player's history at the destination club:
+                  Points are calculated dynamically on a rolling mathematical curve based on the player's history at the <strong>club you are routing them FROM</strong>:
                 </p>
                 <ul className="space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside pl-1">
                   <li><strong className="text-amber-300">0 - 1 Match Appearances:</strong> Maximizes the curve yielding <strong className="text-white">+90 points</strong>.</li>
@@ -503,7 +502,7 @@ export default function Home() {
                   <div className="flex flex-col">
                     <span className="font-bold text-slate-100 leading-tight">{link.player.name}</span>
                     <span className="text-[10px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider">
-                      ⚽ {link.appearances} {link.appearances === 1 ? 'App' : 'Apps'} at destination
+                      ⚽ {link.appearances} {link.appearances === 1 ? 'App' : 'Apps'} for {link.fromClub.name}
                     </span>
                   </div>
                 </div>
