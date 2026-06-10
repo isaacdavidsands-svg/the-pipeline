@@ -5,8 +5,8 @@ import { supabase } from "./supabase";
 
 // --- Types ---
 interface Club { id: string; name: string; country?: string; }
-interface Player { id: any; name: string; nationality: string; imageUrl?: string; }
-interface ChainLink { player: Player; fromClub: Club; toClub: Club; rarity: number; }
+interface Player { id: any; name: string; nationality: string; imageUrl?: string; dateOfBirth?: string; }
+interface ChainLink { player: Player; fromClub: Club; toClub: Club; rarity: number; appearances: number; }
 
 const MAX_LINKS = 7;
 
@@ -79,28 +79,44 @@ const getClubStyle = (clubName: string) => {
   return styles[clubName] || "from-slate-700 to-slate-800 text-white border-slate-600";
 };
 
+// Supercharged Fuzzy Matcher
 const checkClubMatch = (dbClub: string, targetClub: string) => {
-  if (!dbClub) return false;
-  const db = dbClub.toLowerCase();
-  const target = targetClub.toLowerCase();
+  if (!dbClub || !targetClub) return false;
+  
+  const db = dbClub.toLowerCase().replace(/[^a-z]/g, "");
+  const target = targetClub.toLowerCase().replace(/[^a-z]/g, "");
   
   if (db === target) return true;
-  if (target === "manchester city" && (db.includes("man city") || db.includes("manchester city"))) return true;
-  if (target === "manchester united" && (db.includes("man utd") || db.includes("man united"))) return true;
-  if (target === "paris saint-germain" && (db.includes("psg") || db.includes("paris sg"))) return true;
-  if (target === "real madrid" && db.includes("real madrid")) return true;
-  if (target === "bayern munich" && db.includes("bayern")) return true;
-  if (target === "inter milan" && (db === "inter" || db.includes("inter milan"))) return true;
-  if (target === "ac milan" && (db === "milan" || db === "ac milan")) return true;
+  if (db.includes(target) || target.includes(db)) return true;
+
+  const rawDb = dbClub.toLowerCase();
+  if (targetClub === "Manchester City" && (rawDb.includes("man city") || rawDb.includes("mancity"))) return true;
+  if (targetClub === "Manchester United" && (rawDb.includes("man utd") || rawDb.includes("mufc"))) return true;
+  if (targetClub === "Paris Saint-Germain" && (rawDb.includes("psg") || rawDb.includes("paris sg"))) return true;
+  if (targetClub === "Inter Milan" && (rawDb === "inter" || rawDb.includes("intermilan"))) return true;
+  if (targetClub === "AC Milan" && (rawDb === "milan" || rawDb.includes("acmilan"))) return true;
   
-  return db.includes(target) || target.includes(db);
+  return false;
+};
+
+// Dynamic Exponential Sliding Scale Scoring Engine
+const calculateSlidingScalePoints = (appearances: number) => {
+  if (appearances <= 0) return 90; 
+  
+  const baseBaseline = 15;
+  const maxBonusMultiplier = 75;
+  const decayConstant = 0.04;
+
+  const calculatedPoints = baseBaseline + maxBonusMultiplier * Math.exp(-decayConstant * appearances);
+  
+  return Math.round(calculatedPoints);
 };
 
 export default function Home() {
   const [gameMode, setGameMode] = useState<"DAILY" | "HARD_DAILY" | "UNLIMITED">("DAILY");
   const [startClub, setStartClub] = useState<Club>(DAILY_PUZZLE.start);
   const [targetClub, setTargetClub] = useState<Club>(DAILY_PUZZLE.target);
-  const [showRules, setShowRules] = useState(false);
+  const [showRules, setShowRules] = useState(true);
 
   const [currentClub, setCurrentClub] = useState<Club>(DAILY_PUZZLE.start);
   const [chain, setChain] = useState<ChainLink[]>([]);
@@ -113,7 +129,8 @@ export default function Home() {
   
   const [routingPlayer, setRoutingPlayer] = useState<Player | null>(null);
   const [routingOptions, setRoutingOptions] = useState<Club[]>([]);
-  const [routingRarity, setRoutingRarity] = useState<number>(0);
+  
+  const [activePlayerPerformances, setActivePlayerPerformances] = useState<any[]>([]);
 
   const startDailyMode = () => {
     setGameMode("DAILY");
@@ -152,23 +169,26 @@ export default function Home() {
     setMessage("");
     setSearchQuery("");
     setSearchResults([]);
+    setActivePlayerPerformances([]);
   };
 
   useEffect(() => {
-    const fetchPlayers = async () => {
+    const flexScoutQuery = async () => {
       if (searchQuery.trim().length < 3 || gameState !== "PLAYING") {
         setSearchResults([]);
         return;
       }
       
-      const cleanSearch = searchQuery.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const cleanSearch = searchQuery.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
       try {
         const { data, error } = await supabase
           .from("players")
-          .select("id, player_name, country_of_birth, player_image_url")
-          .ilike("player_name", `%${cleanSearch}%`)
-          .limit(10);
+          .select("id, player_name, country_of_birth, player_image_url, date_of_birth")
+          .ilike("search_name", `%${cleanSearch}%`)
+          // FIX: Changed nullsLast to nullsFirst: false to satisfy TypeScript!
+          .order("date_of_birth", { ascending: true, nullsFirst: false }) 
+          .limit(20);
 
         if (error) {
           setMessage(`⚠️ Search Error: ${error.message}`);
@@ -178,16 +198,17 @@ export default function Home() {
         if (data) {
           setSearchResults(data.map(p => ({
             id: p.id, 
-            name: cleanPlayerName(p.player_name),
+            name: cleanPlayerName(p.player_name), 
             nationality: p.country_of_birth || "Unknown",
-            imageUrl: p.player_image_url
+            imageUrl: p.player_image_url,
+            dateOfBirth: p.date_of_birth
           })));
         }
       } catch (e) {
         setMessage("⚠️ Connection error while searching.");
       }
     };
-    const delay = setTimeout(() => fetchPlayers(), 400);
+    const delay = setTimeout(() => flexScoutQuery(), 400);
     return () => clearTimeout(delay);
   }, [searchQuery, gameState]);
 
@@ -197,13 +218,13 @@ export default function Home() {
     setSearchQuery(""); 
 
     try {
-      const { data: transfers, error } = await supabase
+      const { data: transfers, error: txError } = await supabase
         .from("all_transfers")
         .select("from_team_name, to_team_name")
         .eq("player_id", player.id);
 
-      if (error) {
-        setMessage(`⚠️ Transfer Fetch Error: ${error.message} (${error.code})`);
+      if (txError) {
+        setMessage(`⚠️ Transfer Fetch Error: ${txError.message}`);
         return;
       }
 
@@ -212,11 +233,32 @@ export default function Home() {
         return;
       }
 
+      // Fast, direct ID match using ALL columns to avoid CSV spacing bugs
+      const { data: performances, error: perfError } = await supabase
+        .from("player_performances")
+        .select("*")
+        .eq("player_id", player.id);
+
+      if (perfError) {
+        console.error("Supabase Error:", perfError.message);
+      }
+
+      const cachedPerformances = performances || [];
+      setActivePlayerPerformances(cachedPerformances);
+
       const playerClubNames = new Set<string>();
       transfers.forEach(t => { 
         if (t.from_team_name) playerClubNames.add(t.from_team_name); 
         if (t.to_team_name) playerClubNames.add(t.to_team_name); 
       });
+      
+      if (cachedPerformances.length > 0) {
+        const sampleRow = cachedPerformances[0];
+        const safeTeamKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase() === 'team_name') || 'team_name';
+        cachedPerformances.forEach(p => {
+          if (p[safeTeamKey]) playerClubNames.add(String(p[safeTeamKey]));
+        });
+      }
 
       let playedForCurrentClub = false;
       for (const club of playerClubNames) {
@@ -228,12 +270,11 @@ export default function Home() {
 
       if (!playedForCurrentClub) {
         setFailedAttempts(prev => prev + 1);
-        setMessage(`❌ ${player.name} never played for ${currentClub.name}!`);
+        const knownClubs = Array.from(playerClubNames).slice(0, 3).join(", ");
+        setMessage(`❌ Incorrect. DB says ${player.name} played for: ${knownClubs}... but not ${currentClub.name}.`);
         checkLossCondition();
         return;
       }
-
-      const rarity = Math.floor(Math.random() * 90) + 10; 
       
       const destinationClubs: Club[] = [];
       playerClubNames.forEach(clubName => {
@@ -242,27 +283,10 @@ export default function Home() {
           }
       });
 
-      let reachedTarget = false;
-      for (const club of playerClubNames) {
-        if (checkClubMatch(club, targetClub.name)) {
-          reachedTarget = true;
-          break;
-        }
-      }
-
-      if (reachedTarget) {
-        setChain([...chain, { player, fromClub: currentClub, toClub: targetClub, rarity }]);
-        setCurrentClub(targetClub);
-        setMessage("");
-        setGameState("WON");
-        return;
-      }
-
       if (destinationClubs.length > 0) {
         setRoutingPlayer(player);
         const uniqueClubs = Array.from(new Set(destinationClubs.map(c => c.name))).map(name => ({id: name, name}));
         setRoutingOptions(uniqueClubs);
-        setRoutingRarity(rarity);
         setGameState("ROUTING");
         setMessage("");
       } else {
@@ -275,12 +299,40 @@ export default function Home() {
 
   const handleRouteSelect = (nextClub: Club) => {
     if (!routingPlayer) return;
-    setChain([...chain, { player: routingPlayer, fromClub: currentClub, toClub: nextClub, rarity: routingRarity }]);
-    setCurrentClub(nextClub);
-    setGameState("PLAYING");
+    
+    let totalDestinationApps = 0;
+
+    if (activePlayerPerformances.length > 0) {
+      const sampleRow = activePlayerPerformances[0];
+      const safeTeamKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase() === 'team_name') || 'team_name';
+      const safePitchKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase().includes('pitch') || k.trim().toLowerCase().includes('appearances')) || 'nb_on_pitch';
+
+      totalDestinationApps = activePlayerPerformances
+        .filter(p => p[safeTeamKey] && checkClubMatch(String(p[safeTeamKey]), nextClub.name))
+        .reduce((sum, current) => sum + (Number(current[safePitchKey]) || 0), 0);
+    }
+
+    const rarity = calculateSlidingScalePoints(totalDestinationApps);
+    
+    const newChain = [
+      ...chain, 
+      { player: routingPlayer, fromClub: currentClub, toClub: nextClub, rarity, appearances: totalDestinationApps }
+    ];
+    
+    setChain(newChain);
+    
+    if (checkClubMatch(nextClub.name, targetClub.name)) {
+      setCurrentClub(nextClub);
+      setMessage("");
+      setGameState("WON");
+    } else {
+      setCurrentClub(nextClub);
+      setGameState("PLAYING");
+      checkLossCondition();
+    }
+    
     setRoutingPlayer(null);
     setMessage("");
-    checkLossCondition();
   };
 
   const checkLossCondition = () => {
@@ -299,14 +351,13 @@ export default function Home() {
   const handleShare = () => {
     const score = calculateScore();
     const grid = Array(MAX_LINKS).fill("⬛").map((_, i) => i < chain.length ? "🟩" : "⬛").join("");
-    const pathText = chain.map(l => l.player.name).join(" ➡️ ");
     
     let header = "";
     if (gameMode === "DAILY") header = `The Pipeline #${DAILY_PUZZLE.day}`;
     else if (gameMode === "HARD_DAILY") header = `The Pipeline [HARDCORE] #${HARD_DAILY_PUZZLE.day} 🩸`;
     else header = `The Pipeline (Unlimited Mode)`;
 
-    const text = `${header}\n⚽ ${startClub.name} ➡️ ${targetClub.name}\n\nScore: ${score} 📈\n${grid}\n${pathText}\n\nPlay: thepipeline.com`;
+    const text = `${header}\n⚽ ${startClub.name} ➡️ ${targetClub.name}\n\nScore: ${score} 📈\n${grid}\n\nPlay: thepipeline.com`;
     navigator.clipboard.writeText(text);
     alert("Copied to clipboard!");
   };
@@ -318,7 +369,7 @@ export default function Home() {
       
       {showRules && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-200">
-          <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
+          <div className="bg-slate-900 border border-slate-700 p-8 rounded-3xl max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button 
               onClick={() => setShowRules(false)}
               className="absolute top-5 right-5 text-slate-500 hover:text-white text-xl transition-colors"
@@ -326,44 +377,52 @@ export default function Home() {
               ✕
             </button>
             
-            <h2 className="text-3xl font-black text-emerald-400 mb-6 tracking-tight">How to Play</h2>
+            <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-6 tracking-tight uppercase">
+              How to Play
+            </h2>
             
             <div className="space-y-5 text-slate-300 font-medium text-sm sm:text-base">
-              <div className="flex items-start gap-3">
-                <span className="bg-emerald-500/10 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs mt-0.5 shrink-0">1</span>
-                <p>Connect the <strong className="text-white font-bold">Starting Club</strong> to the <strong className="text-white font-bold">Target Club</strong> using shared player careers.</p>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <span className="bg-emerald-500/10 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs mt-0.5 shrink-0">2</span>
-                <p>Name a player who played for your current club. If correct, select their next destination from their real career history.</p>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <span className="bg-emerald-500/10 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs mt-0.5 shrink-0">3</span>
-                <p>You have a maximum of <strong className="text-white font-bold">{MAX_LINKS} total moves</strong> (wrong guesses burn a slot!).</p>
-              </div>
-
-              <hr className="border-slate-800 my-2" />
-
-              <div className="bg-gradient-to-br from-amber-950/40 to-cyan-950/40 border border-amber-500/20 rounded-2xl p-5 space-y-3">
-                <h3 className="text-amber-400 font-black text-sm uppercase tracking-wider flex items-center gap-2">
-                  <span>📈</span> High Score Strategy
-                </h3>
-                <ul className="space-y-2 text-sm text-slate-300 list-disc list-inside">
-                  <li><strong className="text-amber-300">Obscurity Points:</strong> Niche players and rare career pathways yield significantly higher base scores than obvious superstars.</li>
-                  <li><strong className="text-cyan-400">Chain Multiplier:</strong> Longer paths generate massive payouts. <span className="text-white font-semibold">The more links you successfully chain together before hitting the target, the higher your score multiplier!</span></li>
-                </ul>
-              </div>
               
-              <div className="text-center text-xs text-slate-500 font-semibold uppercase tracking-widest pt-2">
-                📅 Verified transfers up to October 2025
+              <div className="space-y-4">
+                <div className="flex gap-3 items-start">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 font-black flex items-center justify-center border border-emerald-500/30 text-xs shrink-0 mt-0.5">1</div>
+                  <p><strong className="text-white">Connect the Clubs:</strong> Link the starting giant to the target squad using valid shared player careers.</p>
+                </div>
+
+                <div className="flex gap-3 items-start">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 font-black flex items-center justify-center border border-emerald-500/30 text-xs shrink-0 mt-0.5">2</div>
+                  <p><strong className="text-white">Route their History:</strong> Search a baller from your active club, then select which team to travel to based on their real career record.</p>
+                </div>
+
+                <div className="flex gap-3 items-start">
+                  <div className="w-6 h-6 rounded-full bg-emerald-500/10 text-emerald-400 font-black flex items-center justify-center border border-emerald-500/30 text-xs shrink-0 mt-0.5">3</div>
+                  <p><strong className="text-white">Watch Your Links:</strong> You have a hard ceiling of <strong className="text-red-400">{MAX_LINKS} total moves</strong>. Wrong guesses burn a slot instantly!</p>
+                </div>
+              </div>
+
+              <hr className="border-slate-800 my-1" />
+
+              <div className="bg-gradient-to-br from-amber-950/30 to-cyan-950/30 border border-amber-500/20 rounded-2xl p-5 space-y-2.5">
+                <h3 className="text-amber-400 font-black text-base uppercase tracking-wider flex items-center gap-2">
+                  <span>📈</span> The Obscurity Sliding Scale
+                </h3>
+                <p className="text-sm text-slate-400 leading-relaxed">
+                  Points are calculated dynamically on a rolling mathematical curve based on the player's history at the destination club:
+                </p>
+                <ul className="space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside pl-1">
+                  <li><strong className="text-amber-300">0 - 1 Match Appearances:</strong> Maximizes the curve yielding <strong className="text-white">+90 points</strong>.</li>
+                  <li><strong className="text-amber-200">15 - 30 Appearances:</strong> Smoothly drops down giving <strong className="text-white">~56 to 37 points</strong>.</li>
+                  <li><strong className="text-cyan-400">100+ Appearances (Legends):</strong> Flattens down to a steady baseline reward of <strong className="text-white">15 points</strong>.</li>
+                </ul>
+                <p className="text-xs text-slate-400 italic pt-1 border-t border-slate-800/60">
+                  💡 Strategy Tip: Chaining longer paths increases your multiplier, but hunting down forgotten short-term spells breaks the high score board!
+                </p>
               </div>
             </div>
 
             <button 
               onClick={() => setShowRules(false)}
-              className="mt-6 w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black py-4 rounded-xl transition-all shadow-lg active:scale-[0.99]"
+              className="mt-6 w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-lg py-3.5 rounded-xl transition-all shadow-lg active:scale-[0.99]"
             >
               Enter The Pipeline
             </button>
@@ -440,8 +499,15 @@ export default function Home() {
                   ) : (
                     <span className="text-2xl">{getFlag(link.player.nationality)}</span>
                   )}
-                  <span className="font-bold text-slate-100">{link.player.name}</span>
+                  
+                  <div className="flex flex-col">
+                    <span className="font-bold text-slate-100 leading-tight">{link.player.name}</span>
+                    <span className="text-[10px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider">
+                      ⚽ {link.appearances} {link.appearances === 1 ? 'App' : 'Apps'} at destination
+                    </span>
+                  </div>
                 </div>
+                
                 <span className="text-xs font-black text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-lg">
                   +{link.rarity}
                 </span>
@@ -485,7 +551,14 @@ export default function Home() {
                     ) : (
                       <span className="text-xl">{getFlag(player.nationality)}</span>
                     )}
-                    <span className="text-slate-200 font-medium">{player.name}</span>
+                    
+                    <div className="flex flex-col">
+                      <span className="text-slate-200 font-medium leading-tight">{player.name}</span>
+                      {player.dateOfBirth && (
+                        <span className="text-slate-500 text-xs font-semibold">Born: {player.dateOfBirth}</span>
+                      )}
+                    </div>
+
                   </li>
                 ))}
               </ul>
