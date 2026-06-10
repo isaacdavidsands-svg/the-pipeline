@@ -5,7 +5,7 @@ import { supabase } from "./supabase";
 
 // --- Types ---
 interface Club { id: string; name: string; country?: string; }
-interface Player { id: string; name: string; nationality: string; }
+interface Player { id: any; name: string; nationality: string; imageUrl?: string; }
 interface ChainLink { player: Player; fromClub: Club; toClub: Club; rarity: number; }
 
 const MAX_LINKS = 7;
@@ -17,14 +17,12 @@ const DAILY_PUZZLE = {
   target: { id: "Juventus", name: "Juventus" } 
 };
 
-// The new nightmare mode
 const HARD_DAILY_PUZZLE = { 
   day: 12, 
   start: { id: "Shakhtar Donetsk", name: "Shakhtar Donetsk" }, 
   target: { id: "Flamengo", name: "Flamengo" } 
 };
 
-// Top clubs for Unlimited Mode to pick from
 const MAJOR_CLUBS: Club[] = [
   { id: "Manchester City", name: "Manchester City" },
   { id: "Juventus", name: "Juventus" },
@@ -42,7 +40,12 @@ const MAJOR_CLUBS: Club[] = [
   { id: "Atletico Madrid", name: "Atletico Madrid" }
 ];
 
-// --- Aesthetic Helpers ---
+// --- Helpers ---
+const cleanPlayerName = (name: string) => {
+  if (!name) return "";
+  return name.replace(/\s*\(\d+\)\s*$/, "").trim();
+};
+
 const getFlag = (nationality: string) => {
   const flags: Record<string, string> = {
     "England": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Argentina": "🇦🇷", "Portugal": "🇵🇹", "Brazil": "🇧🇷",
@@ -70,21 +73,35 @@ const getClubStyle = (clubName: string) => {
     "Inter Milan": "from-blue-600 to-black text-white border-yellow-500/50",
     "Borussia Dortmund": "from-yellow-400 to-yellow-500 text-black border-black/50",
     "Atletico Madrid": "from-red-600 to-white text-slate-900 border-blue-800/50",
-    // New Obscure Club Styles
     "Shakhtar Donetsk": "from-orange-500 to-black text-white border-orange-400/50",
     "Flamengo": "from-red-600 to-black text-white border-red-500/50"
   };
   return styles[clubName] || "from-slate-700 to-slate-800 text-white border-slate-600";
 };
 
+const checkClubMatch = (dbClub: string, targetClub: string) => {
+  if (!dbClub) return false;
+  const db = dbClub.toLowerCase();
+  const target = targetClub.toLowerCase();
+  
+  if (db === target) return true;
+  if (target === "manchester city" && (db.includes("man city") || db.includes("manchester city"))) return true;
+  if (target === "manchester united" && (db.includes("man utd") || db.includes("man united"))) return true;
+  if (target === "paris saint-germain" && (db.includes("psg") || db.includes("paris sg"))) return true;
+  if (target === "real madrid" && db.includes("real madrid")) return true;
+  if (target === "bayern munich" && db.includes("bayern")) return true;
+  if (target === "inter milan" && (db === "inter" || db.includes("inter milan"))) return true;
+  if (target === "ac milan" && (db === "milan" || db === "ac milan")) return true;
+  
+  return db.includes(target) || target.includes(db);
+};
+
 export default function Home() {
-  // Game Mode States (Now with HARD_DAILY)
   const [gameMode, setGameMode] = useState<"DAILY" | "HARD_DAILY" | "UNLIMITED">("DAILY");
   const [startClub, setStartClub] = useState<Club>(DAILY_PUZZLE.start);
   const [targetClub, setTargetClub] = useState<Club>(DAILY_PUZZLE.target);
   const [showRules, setShowRules] = useState(false);
 
-  // Play States
   const [currentClub, setCurrentClub] = useState<Club>(DAILY_PUZZLE.start);
   const [chain, setChain] = useState<ChainLink[]>([]);
   const [failedAttempts, setFailedAttempts] = useState<number>(0);
@@ -98,7 +115,6 @@ export default function Home() {
   const [routingOptions, setRoutingOptions] = useState<Club[]>([]);
   const [routingRarity, setRoutingRarity] = useState<number>(0);
 
-  // --- Mode Switchers ---
   const startDailyMode = () => {
     setGameMode("DAILY");
     setStartClub(DAILY_PUZZLE.start);
@@ -117,7 +133,6 @@ export default function Home() {
 
   const startUnlimitedMode = () => {
     let randomStart, randomTarget;
-    // Keep picking until they are different clubs
     do {
       randomStart = MAJOR_CLUBS[Math.floor(Math.random() * MAJOR_CLUBS.length)];
       randomTarget = MAJOR_CLUBS[Math.floor(Math.random() * MAJOR_CLUBS.length)];
@@ -139,28 +154,40 @@ export default function Home() {
     setSearchResults([]);
   };
 
-  // --- Search & Gameplay Logic ---
   useEffect(() => {
     const fetchPlayers = async () => {
-      if (searchQuery.trim().length < 2 || gameState !== "PLAYING") {
+      if (searchQuery.trim().length < 3 || gameState !== "PLAYING") {
         setSearchResults([]);
         return;
       }
       
       const cleanSearch = searchQuery.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-      const { data } = await supabase
-        .from("all_transfers")
-        .select("player_name")
-        .ilike("search_name", `%${cleanSearch}%`)
-        .limit(20);
+      try {
+        const { data, error } = await supabase
+          .from("players")
+          .select("id, player_name, country_of_birth, player_image_url")
+          .ilike("player_name", `%${cleanSearch}%`)
+          .limit(10);
 
-      if (data) {
-        const uniqueNames = Array.from(new Set(data.map(d => d.player_name))).slice(0, 5);
-        setSearchResults(uniqueNames.map(name => ({ id: name, name: name, nationality: "Unknown" })));
+        if (error) {
+          setMessage(`⚠️ Search Error: ${error.message}`);
+          return;
+        }
+
+        if (data) {
+          setSearchResults(data.map(p => ({
+            id: p.id, 
+            name: cleanPlayerName(p.player_name),
+            nationality: p.country_of_birth || "Unknown",
+            imageUrl: p.player_image_url
+          })));
+        }
+      } catch (e) {
+        setMessage("⚠️ Connection error while searching.");
       }
     };
-    const delay = setTimeout(() => fetchPlayers(), 300);
+    const delay = setTimeout(() => fetchPlayers(), 400);
     return () => clearTimeout(delay);
   }, [searchQuery, gameState]);
 
@@ -169,46 +196,80 @@ export default function Home() {
     setSearchResults([]);
     setSearchQuery(""); 
 
-    const { data: transfers } = await supabase.from("all_transfers").select("*").eq("player_name", player.name);
+    try {
+      const { data: transfers, error } = await supabase
+        .from("all_transfers")
+        .select("from_team_name, to_team_name")
+        .eq("player_id", player.id);
 
-    if (!transfers || transfers.length === 0) {
-      setMessage(`❌ ${player.name} has no transfer data.`);
-      return;
-    }
+      if (error) {
+        setMessage(`⚠️ Transfer Fetch Error: ${error.message} (${error.code})`);
+        return;
+      }
 
-    const playerClubNames = new Set<string>();
-    transfers.forEach(t => { 
-      if (t.from_club_name) playerClubNames.add(t.from_club_name); 
-      if (t.to_club_name) playerClubNames.add(t.to_club_name); 
-    });
+      if (!transfers || transfers.length === 0) {
+        setMessage(`❌ ${player.name} has no career transfers in this dataset.`);
+        return;
+      }
 
-    if (!playerClubNames.has(currentClub.name)) {
-      setFailedAttempts(prev => prev + 1);
-      setMessage(`❌ ${player.name} never played for ${currentClub.name}!`);
-      checkLossCondition();
-      return;
-    }
+      const playerClubNames = new Set<string>();
+      transfers.forEach(t => { 
+        if (t.from_team_name) playerClubNames.add(t.from_team_name); 
+        if (t.to_team_name) playerClubNames.add(t.to_team_name); 
+      });
 
-    const rarity = Math.floor(Math.random() * 90) + 10; 
-    playerClubNames.delete(currentClub.name);
-    const destinationClubs = Array.from(playerClubNames).map(name => ({ id: name, name }));
+      let playedForCurrentClub = false;
+      for (const club of playerClubNames) {
+        if (checkClubMatch(club, currentClub.name)) {
+          playedForCurrentClub = true;
+          break;
+        }
+      }
 
-    if (playerClubNames.has(targetClub.name)) {
-      setChain([...chain, { player, fromClub: currentClub, toClub: targetClub, rarity }]);
-      setCurrentClub(targetClub);
-      setMessage("");
-      setGameState("WON");
-      return;
-    }
+      if (!playedForCurrentClub) {
+        setFailedAttempts(prev => prev + 1);
+        setMessage(`❌ ${player.name} never played for ${currentClub.name}!`);
+        checkLossCondition();
+        return;
+      }
 
-    if (destinationClubs.length > 0) {
-      setRoutingPlayer(player);
-      setRoutingOptions(destinationClubs);
-      setRoutingRarity(rarity);
-      setGameState("ROUTING");
-      setMessage("");
-    } else {
-      setMessage(`❌ ${player.name} is a dead end.`);
+      const rarity = Math.floor(Math.random() * 90) + 10; 
+      
+      const destinationClubs: Club[] = [];
+      playerClubNames.forEach(clubName => {
+          if (!checkClubMatch(clubName, currentClub.name)) {
+              destinationClubs.push({ id: clubName, name: clubName });
+          }
+      });
+
+      let reachedTarget = false;
+      for (const club of playerClubNames) {
+        if (checkClubMatch(club, targetClub.name)) {
+          reachedTarget = true;
+          break;
+        }
+      }
+
+      if (reachedTarget) {
+        setChain([...chain, { player, fromClub: currentClub, toClub: targetClub, rarity }]);
+        setCurrentClub(targetClub);
+        setMessage("");
+        setGameState("WON");
+        return;
+      }
+
+      if (destinationClubs.length > 0) {
+        setRoutingPlayer(player);
+        const uniqueClubs = Array.from(new Set(destinationClubs.map(c => c.name))).map(name => ({id: name, name}));
+        setRoutingOptions(uniqueClubs);
+        setRoutingRarity(rarity);
+        setGameState("ROUTING");
+        setMessage("");
+      } else {
+        setMessage(`❌ ${player.name} is a dead end.`);
+      }
+    } catch (e) {
+      setMessage("⚠️ Connection error fetching transfer pathways.");
     }
   };
 
@@ -231,8 +292,8 @@ export default function Home() {
 
   const calculateScore = () => {
     const baseScore = chain.reduce((sum, link) => sum + link.rarity, 0);
-    const slotsRemaining = MAX_LINKS - chain.length;
-    return baseScore * Math.max(1, slotsRemaining);
+    const multiplier = chain.length; 
+    return baseScore * Math.max(1, multiplier);
   };
 
   const handleShare = () => {
@@ -240,7 +301,6 @@ export default function Home() {
     const grid = Array(MAX_LINKS).fill("⬛").map((_, i) => i < chain.length ? "🟩" : "⬛").join("");
     const pathText = chain.map(l => l.player.name).join(" ➡️ ");
     
-    // Custom header based on mode!
     let header = "";
     if (gameMode === "DAILY") header = `The Pipeline #${DAILY_PUZZLE.day}`;
     else if (gameMode === "HARD_DAILY") header = `The Pipeline [HARDCORE] #${HARD_DAILY_PUZZLE.day} 🩸`;
@@ -256,34 +316,61 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#0B0F19] text-white flex flex-col items-center py-8 px-4 font-sans selection:bg-emerald-500/30">
       
-      {/* Rules Modal */}
       {showRules && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
-          <div className="bg-slate-900 border border-slate-700 p-8 rounded-3xl max-w-md w-full shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-4 animate-in fade-in duration-200">
+          <div className="bg-slate-900 border border-slate-800 p-8 rounded-3xl max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button 
               onClick={() => setShowRules(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white text-2xl font-bold"
+              className="absolute top-5 right-5 text-slate-500 hover:text-white text-xl transition-colors"
             >
               ✕
             </button>
-            <h2 className="text-2xl font-black text-emerald-400 mb-4">How to Play</h2>
-            <ul className="space-y-4 text-slate-300 font-medium">
-              <li>1️⃣ Connect the starting club to the target club using real player transfers.</li>
-              <li>2️⃣ Type a player's name who played for your current club. If correct, you choose their next destination from their real career history.</li>
-              <li>3️⃣ You have a maximum of <strong className="text-white">{MAX_LINKS} moves</strong> (including wrong guesses!).</li>
-              <li>4️⃣ Reach the final target club before your links run out to win!</li>
-            </ul>
+            
+            <h2 className="text-3xl font-black text-emerald-400 mb-6 tracking-tight">How to Play</h2>
+            
+            <div className="space-y-5 text-slate-300 font-medium text-sm sm:text-base">
+              <div className="flex items-start gap-3">
+                <span className="bg-emerald-500/10 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs mt-0.5 shrink-0">1</span>
+                <p>Connect the <strong className="text-white font-bold">Starting Club</strong> to the <strong className="text-white font-bold">Target Club</strong> using shared player careers.</p>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <span className="bg-emerald-500/10 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs mt-0.5 shrink-0">2</span>
+                <p>Name a player who played for your current club. If correct, select their next destination from their real career history.</p>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <span className="bg-emerald-500/10 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs mt-0.5 shrink-0">3</span>
+                <p>You have a maximum of <strong className="text-white font-bold">{MAX_LINKS} total moves</strong> (wrong guesses burn a slot!).</p>
+              </div>
+
+              <hr className="border-slate-800 my-2" />
+
+              <div className="bg-gradient-to-br from-amber-950/40 to-cyan-950/40 border border-amber-500/20 rounded-2xl p-5 space-y-3">
+                <h3 className="text-amber-400 font-black text-sm uppercase tracking-wider flex items-center gap-2">
+                  <span>📈</span> High Score Strategy
+                </h3>
+                <ul className="space-y-2 text-sm text-slate-300 list-disc list-inside">
+                  <li><strong className="text-amber-300">Obscurity Points:</strong> Niche players and rare career pathways yield significantly higher base scores than obvious superstars.</li>
+                  <li><strong className="text-cyan-400">Chain Multiplier:</strong> Longer paths generate massive payouts. <span className="text-white font-semibold">The more links you successfully chain together before hitting the target, the higher your score multiplier!</span></li>
+                </ul>
+              </div>
+              
+              <div className="text-center text-xs text-slate-500 font-semibold uppercase tracking-widest pt-2">
+                📅 Verified transfers up to October 2025
+              </div>
+            </div>
+
             <button 
               onClick={() => setShowRules(false)}
-              className="mt-8 w-full bg-emerald-500 hover:bg-emerald-400 text-black font-black py-3 rounded-xl transition-colors"
+              className="mt-6 w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black py-4 rounded-xl transition-all shadow-lg active:scale-[0.99]"
             >
-              Got it!
+              Enter The Pipeline
             </button>
           </div>
         </div>
       )}
 
-      {/* Sleek Header & Mode Switchers */}
       <div className="text-center mb-8 w-full max-w-md relative">
         <button 
           onClick={() => setShowRules(true)}
@@ -296,7 +383,6 @@ export default function Home() {
           THE PIPELINE
         </h1>
         
-        {/* Mode Toggle Buttons (Now with 3 options!) */}
         <div className="flex bg-white/5 rounded-xl p-1 mb-4 border border-white/10 gap-1">
           <button 
             onClick={startDailyMode}
@@ -332,8 +418,6 @@ export default function Home() {
       </div>
 
       <div className="w-full max-w-md relative">
-        
-        {/* Connection Board */}
         <div className="flex justify-between items-center mb-10 px-2">
           <div className={`w-28 h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(startClub.name)} border-2`}>
             {startClub.name}
@@ -346,13 +430,16 @@ export default function Home() {
           </div>
         </div>
 
-        {/* The Timeline */}
         <div className="flex flex-col gap-3 mb-8">
           {chain.map((link, idx) => (
             <div key={idx} className="animate-in slide-in-from-top-4 fade-in duration-500 flex flex-col items-center">
               <div className="w-full bg-white/[0.03] backdrop-blur-md border border-white/10 p-4 rounded-2xl flex justify-between items-center shadow-lg">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">{getFlag(link.player.nationality)}</span>
+                  {link.player.imageUrl ? (
+                    <img src={link.player.imageUrl} alt="" className="w-8 h-8 rounded-full object-cover bg-slate-800" />
+                  ) : (
+                    <span className="text-2xl">{getFlag(link.player.nationality)}</span>
+                  )}
                   <span className="font-bold text-slate-100">{link.player.name}</span>
                 </div>
                 <span className="text-xs font-black text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-lg">
@@ -375,7 +462,6 @@ export default function Home() {
           {message}
         </div>
 
-        {/* Interactive Areas */}
         {gameState === "PLAYING" && (
           <div className="relative animate-in fade-in duration-300">
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-500">🔍</div>
@@ -387,14 +473,18 @@ export default function Home() {
               className="w-full bg-white/5 border border-white/10 text-white pl-12 pr-4 py-4 rounded-2xl focus:border-emerald-500 focus:bg-white/10 focus:ring-1 focus:ring-emerald-500 transition-all outline-none shadow-2xl placeholder:text-slate-500"
             />
             {searchResults.length > 0 && (
-              <ul className="absolute z-20 w-full bg-[#151b2b] border border-white/10 rounded-2xl mt-2 shadow-2xl overflow-hidden divide-y divide-white/5">
+              <ul className="absolute z-20 w-full bg-[#151b2b] border border-white/10 rounded-2xl mt-2 shadow-2xl overflow-hidden divide-y divide-white/5 max-h-60 overflow-y-auto">
                 {searchResults.map((player) => (
                   <li 
                     key={player.id} 
                     onClick={() => handlePlayerSelect(player)} 
                     className="px-5 py-4 hover:bg-white/5 cursor-pointer flex items-center gap-3 transition-colors"
                   >
-                    <span className="text-xl">{getFlag(player.nationality)}</span>
+                    {player.imageUrl ? (
+                      <img src={player.imageUrl} alt="" className="w-8 h-8 rounded-full object-cover bg-slate-800" />
+                    ) : (
+                      <span className="text-xl">{getFlag(player.nationality)}</span>
+                    )}
                     <span className="text-slate-200 font-medium">{player.name}</span>
                   </li>
                 ))}
@@ -406,13 +496,12 @@ export default function Home() {
         {gameState === "ROUTING" && routingPlayer && (
           <div className="bg-white/5 backdrop-blur-xl p-5 rounded-2xl border border-amber-500/30 animate-in slide-in-from-bottom-4 shadow-2xl">
             <p className="mb-4 text-center text-slate-300 text-sm">
-              <span className="text-lg mr-2">{getFlag(routingPlayer.nationality)}</span>
               Select destination for <strong className="text-white">{routingPlayer.name}</strong>
             </p>
-            <div className="flex flex-col gap-3">
-              {routingOptions.map(club => (
+            <div className="flex flex-col gap-3 max-h-60 overflow-y-auto pr-1">
+              {routingOptions.map((club, idx) => (
                 <button 
-                  key={club.id} 
+                  key={idx} 
                   onClick={() => handleRouteSelect(club)}
                   className={`w-full py-3.5 px-4 rounded-xl font-bold flex items-center justify-between transition-transform hover:scale-[1.02] active:scale-95 border-2 shadow-lg bg-gradient-to-br ${getClubStyle(club.name)}`}
                 >
@@ -429,7 +518,7 @@ export default function Home() {
             <div className="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-2">Final Score</div>
             <div className="text-6xl font-black text-white mb-2">{calculateScore()}</div>
             <p className="text-emerald-300/70 text-sm font-medium mb-8">
-              Completed in {chain.length} links ({Math.max(1, MAX_LINKS - chain.length)}x Multiplier)
+              Completed in {chain.length} links ({chain.length}x Multiplier)
             </p>
             <div className="flex gap-3 w-full">
               <button 
