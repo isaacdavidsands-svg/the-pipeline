@@ -903,7 +903,7 @@ export default function Home() {
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent animate-[pulse_2s_ease-in-out_infinite] blur-xl"></div>
                 
                 <svg className="w-14 h-14 text-emerald-400 animate-bounce relative z-10 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinelinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 
                 <p className="mt-5 text-emerald-400 font-black uppercase tracking-widest text-sm relative z-10">
