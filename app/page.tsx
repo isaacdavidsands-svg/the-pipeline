@@ -8,13 +8,54 @@ interface Club { id: string; name: string; country?: string; }
 interface Player { id: any; name: string; nationality: string; imageUrl?: string; dateOfBirth?: string; }
 interface Era { start: number; end: number; display: string; }
 interface ChainLink { player: Player; fromClub: Club; toClub: Club; rarity: number; appearances: number; anchorEra: Era; isUnderdog: boolean; }
-interface GameStats { played: number; won: number; currentStreak: number; maxStreak: number; }
+interface GameStats { 
+  played: number; 
+  won: number; 
+  currentStreak: number; 
+  maxStreak: number; 
+  history?: { day: number; score: number; links: number; won: boolean }[];
+}
 
 const MAX_LINKS = 7;
+const ANCHOR_DATE = new Date("2026-01-01");
 
 // ============================================================================
-// --- TIER 1: MAJOR CLUBS -> 1-Year Strict Constraint ---
-// (Current Top Premier League + Absolute Global Powerhouses)
+// --- AUTOMATED DAILY PUZZLE POOLS ---
+// ============================================================================
+const DAILY_POOL = [
+  { start: "Manchester City", target: "Juventus" },
+  { start: "Real Madrid", target: "Arsenal" },
+  { start: "Chelsea", target: "Inter Milan" },
+  { start: "Barcelona", target: "Liverpool" },
+  { start: "Manchester United", target: "AC Milan" },
+  { start: "Bayern Munich", target: "Tottenham Hotspur" },
+  { start: "Paris Saint-Germain", target: "Atletico Madrid" },
+  { start: "Aston Villa", target: "Borussia Dortmund" },
+  { start: "Newcastle United", target: "Ajax" },
+  { start: "Arsenal", target: "FC Porto" },
+  { start: "Liverpool", target: "Juventus" },
+  { start: "Real Madrid", target: "Manchester City" },
+  { start: "Barcelona", target: "Chelsea" },
+  { start: "Bayern Munich", target: "Inter Milan" }
+];
+
+const HARDCORE_POOL = [
+  { start: "Shakhtar Donetsk", target: "Flamengo" },
+  { start: "Celtic", target: "Boca Juniors" },
+  { start: "Marseille", target: "River Plate" },
+  { start: "Benfica", target: "Sporting CP" },
+  { start: "Bayer Leverkusen", target: "Napoli" },
+  { start: "Roma", target: "Rangers" },
+  { start: "Sevilla", target: "Ajax" },
+  { start: "Villarreal", target: "Fluminense" },
+  { start: "Olympique Lyonnais", target: "Galatasaray" },
+  { start: "PSV Eindhoven", target: "Palmeiras" },
+  { start: "Sporting CP", target: "Corinthians" },
+  { start: "FC Porto", target: "Boca Juniors" }
+];
+
+// ============================================================================
+// --- CLUB TIER CONFIGURATION ---
 // ============================================================================
 const TIER_1_MAJOR = [
   "Manchester City", "Arsenal", "Liverpool", "Chelsea", "Manchester United", 
@@ -22,30 +63,25 @@ const TIER_1_MAJOR = [
   "Real Madrid", "Barcelona", "Bayern Munich", "Paris Saint-Germain"
 ];
 
-// ============================================================================
-// --- TIER 2: MODERATE CLUBS -> 5-Year Forgiving Constraint ---
-// (Other CL Winners + Top 3 from Top 5 European Leagues)
-// ============================================================================
 const TIER_2_MODERATE = [
-  "AC Milan", "Inter Milan", "Juventus", "Borussia Dortmund", "Hamburger SV",
-  "Ajax", "Feyenoord", "PSV Eindhoven", "Benfica", "FC Porto",
-  "Nottingham Forest", "Celtic", "Marseille", "Red Star Belgrade", "Steaua Bucuresti",
-  "Atletico Madrid", "Napoli", "Bayer Leverkusen", "RB Leipzig", 
-  "Olympique Lyonnais", "AS Monaco", "LOSC Lille"
+  // Remaining Premier League (Roughly Top 14)
+  "West Ham United", "Brighton & Hove Albion", "Fulham", "Bournemouth", "Crystal Palace", "Brentford",
+  
+  // Italy (Serie A) - Top 3
+  "Juventus", "AC Milan", "Inter Milan",
+  
+  // Spain (La Liga) - Top 3 non-giants
+  "Atletico Madrid", "Sevilla", "Real Sociedad",
+  
+  // Germany (Bundesliga) - Top 3 non-giants
+  "Borussia Dortmund", "Bayer Leverkusen", "RB Leipzig",
+  
+  // France (Ligue 1) - Top 3 non-giants
+  "Olympique Lyonnais", "Marseille", "AS Monaco",
+  
+  // Rest of the World Elite
+  "Ajax", "FC Porto", "Sporting CP", "Celtic", "Rangers"
 ];
-
-// --- Game Data ---
-const DAILY_PUZZLE = { 
-  day: 12, 
-  start: { id: "Manchester City", name: "Manchester City" }, 
-  target: { id: "Juventus", name: "Juventus" } 
-};
-
-const HARD_DAILY_PUZZLE = { 
-  day: 12, 
-  start: { id: "Shakhtar Donetsk", name: "Shakhtar Donetsk" }, 
-  target: { id: "Flamengo", name: "Flamengo" } 
-};
 
 const TARGETABLE_CLUBS: Club[] = [...TIER_1_MAJOR, ...TIER_2_MODERATE].map(name => ({ id: name, name }));
 
@@ -66,31 +102,62 @@ const getFlag = (nationality: string) => {
   return flags[nationality] || "🌍";
 };
 
+// --- DYNAMIC VIBRANT COLOR ENGINE ---
 const getClubStyle = (clubName: string) => {
+  // Hardcoded true colors for TIER 1 and TIER 2 clubs
   const styles: Record<string, string> = {
-    "Manchester City": "from-cyan-400 to-blue-500 text-white border-cyan-400/50",
-    "Juventus": "from-gray-800 to-black text-white border-gray-500/50",
-    "Real Madrid": "from-slate-100 to-white text-slate-900 border-amber-200",
-    "Barcelona": "from-blue-800 to-red-700 text-white border-yellow-400/50",
-    "Chelsea": "from-blue-600 to-blue-800 text-white border-blue-400/50",
-    "Arsenal": "from-red-600 to-red-800 text-white border-amber-300/50",
-    "Manchester United": "from-red-600 to-red-900 text-white border-black/50",
-    "Liverpool": "from-red-500 to-red-700 text-white border-teal-400/30",
-    "Bayern Munich": "from-red-600 to-red-800 text-white border-blue-900/50",
-    "Paris Saint-Germain": "from-blue-900 to-blue-950 text-white border-red-500/50",
-    "AC Milan": "from-red-600 to-black text-white border-gray-400/50",
-    "Inter Milan": "from-blue-600 to-black text-white border-yellow-500/50",
-    "Borussia Dortmund": "from-yellow-400 to-yellow-500 text-black border-black/50",
-    "Atletico Madrid": "from-red-600 to-white text-slate-900 border-blue-800/50",
-    "Shakhtar Donetsk": "from-orange-500 to-black text-white border-orange-400/50",
-    "Flamengo": "from-red-600 to-black text-white border-red-500/50",
-    "Aston Villa": "from-[#38003c] to-[#95BFE5] text-white border-[#95BFE5]/50",
-    "Tottenham Hotspur": "from-slate-100 to-white text-slate-900 border-indigo-900",
-    "Newcastle United": "from-gray-900 to-black text-white border-white/50"
+    // --- TIER 1 ---
+    "Manchester City": "from-[#6CABDD] to-[#1C2C5B] text-white border-[#6CABDD]/50",
+    "Arsenal": "from-[#EF0107] to-[#9C0004] text-white border-white/50",
+    "Liverpool": "from-[#C8102E] to-[#8A0A1F] text-white border-[#00B2A9]/50",
+    "Chelsea": "from-[#034694] to-[#022A59] text-white border-white/50",
+    "Manchester United": "from-[#DA291C] to-[#000000] text-white border-[#FBE122]/50",
+    "Tottenham Hotspur": "from-white to-slate-200 text-[#132257] border-[#132257]",
+    "Aston Villa": "from-[#670E36] to-[#95BFE5] text-white border-[#95BFE5]/50", 
+    "Newcastle United": "from-black to-gray-800 text-white border-white",
+    "Real Madrid": "from-white to-slate-100 text-slate-900 border-[#FEBE10]",
+    "Barcelona": "from-[#004D98] to-[#A50044] text-white border-[#EDBB00]/50",
+    "Bayern Munich": "from-[#DC052D] to-[#98041F] text-white border-white/50",
+    "Paris Saint-Germain": "from-[#004170] to-[#002B4A] text-white border-[#DA291C]/50",
+
+    // --- TIER 2 ---
+    "West Ham United": "from-[#7A263A] to-[#1BB1E7] text-white border-[#1BB1E7]/50",
+    "Brighton & Hove Albion": "from-[#0057B8] to-white text-slate-900 border-[#0057B8]/50",
+    "Fulham": "from-white to-slate-200 text-slate-900 border-black",
+    "Bournemouth": "from-[#B50E12] to-black text-white border-[#B50E12]/50",
+    "Crystal Palace": "from-[#1B458F] to-[#A7A5A6] text-white border-[#C4122E]/50",
+    "Brentford": "from-[#E30613] to-white text-slate-900 border-black/50",
+    
+    "Juventus": "from-black to-gray-800 text-white border-white/50",
+    "AC Milan": "from-[#FB090B] to-black text-white border-gray-400/50",
+    "Inter Milan": "from-[#010E80] to-black text-white border-[#010E80]/50",
+    
+    "Atletico Madrid": "from-[#CB3524] to-white text-slate-900 border-[#272E61]/50",
+    "Sevilla": "from-white to-slate-100 text-slate-900 border-[#D41029]",
+    "Real Sociedad": "from-[#0067B1] to-white text-slate-900 border-[#0067B1]/50",
+    
+    "Borussia Dortmund": "from-[#FDE100] to-[#E6C600] text-black border-black",
+    "Bayer Leverkusen": "from-[#E32221] to-black text-white border-[#E32221]/50",
+    "RB Leipzig": "from-white to-slate-200 text-[#002D54] border-[#D60C2A]",
+    
+    "Olympique Lyonnais": "from-white to-slate-100 text-[#003876] border-[#DA291C]/50",
+    "Marseille": "from-[#00B9F1] to-white text-slate-900 border-[#00B9F1]/50",
+    "AS Monaco": "from-[#E32219] to-white text-slate-900 border-[#E32219]/50",
+    
+    "Ajax": "from-[#D2122E] to-white text-slate-900 border-[#D2122E]/50",
+    "FC Porto": "from-[#00428C] to-white text-slate-900 border-[#00428C]/50",
+    "Sporting CP": "from-[#008057] to-white text-slate-900 border-[#008057]/50",
+    "Celtic": "from-[#005C3B] to-white text-slate-900 border-[#005C3B]/50",
+    "Rangers": "from-[#1B458F] to-[#14336B] text-white border-[#E30613]/50",
+
+    // Handful of common hard defaults used in puzzle start/targets
+    "Shakhtar Donetsk": "from-[#FC4C02] to-black text-white border-[#FC4C02]/50",
+    "Flamengo": "from-[#C90E10] to-black text-white border-[#C90E10]/50",
   };
 
   if (styles[clubName]) return styles[clubName];
 
+  // The Dynamic Fallback Engine for the remaining underdog clubs
   const vibrantGradients = [
     "from-emerald-500 to-teal-700 text-white border-emerald-400/50",
     "from-rose-500 to-red-700 text-white border-rose-400/50",
@@ -111,6 +178,7 @@ const getClubStyle = (clubName: string) => {
   return vibrantGradients[index];
 };
 
+// --- THE ALIAS INTERCEPTOR & MASTER DICTIONARY ---
 const getCanonicalName = (rawName: string) => {
   if (!rawName) return "";
   let lower = rawName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -156,6 +224,11 @@ const standardizeClubName = (rawName: string) => {
   const canonical = getCanonicalName(rawName);
   const foundMajor = TARGETABLE_CLUBS.find(c => checkClubMatch(canonical, c.name));
   return foundMajor ? foundMajor.name : canonical;
+};
+
+const isMajorOrModerate = (name: string) => {
+    const canonical = standardizeClubName(name);
+    return TIER_1_MAJOR.includes(canonical) || TIER_2_MODERATE.includes(canonical);
 };
 
 const generateEraConstraint = (clubName: string): Era => {
@@ -259,15 +332,15 @@ const calculateSlidingScalePoints = (appearances: number) => {
 
 export default function Home() {
   const [gameMode, setGameMode] = useState<"DAILY" | "HARD_DAILY" | "UNLIMITED">("DAILY");
-  const [startClub, setStartClub] = useState<Club>(DAILY_PUZZLE.start);
-  const [targetClub, setTargetClub] = useState<Club>(DAILY_PUZZLE.target);
+  const [startClub, setStartClub] = useState<Club>({ id: "", name: "" });
+  const [targetClub, setTargetClub] = useState<Club>({ id: "", name: "" });
+  const [currentDay, setCurrentDay] = useState<number>(0);
   
   const [showRules, setShowRules] = useState(true);
   const [showStats, setShowStats] = useState(false);
-  
-  const [stats, setStats] = useState<GameStats>({ played: 0, won: 0, currentStreak: 0, maxStreak: 0 });
+  const [stats, setStats] = useState<GameStats>({ played: 0, won: 0, currentStreak: 0, maxStreak: 0, history: [] });
 
-  const [currentClub, setCurrentClub] = useState<Club>(DAILY_PUZZLE.start);
+  const [currentClub, setCurrentClub] = useState<Club>({ id: "", name: "" });
   const [anchorEra, setAnchorEra] = useState<Era>({ start: 2018, end: 2018, display: "2018" });
   const [chain, setChain] = useState<ChainLink[]>([]);
   const [failedAttempts, setFailedAttempts] = useState<number>(0);
@@ -283,45 +356,122 @@ export default function Home() {
   
   const [activePlayerPerformances, setActivePlayerPerformances] = useState<any[]>([]);
 
+  // --- 1. INITIAL MOUNT & SAVE RESTORATION ---
   useEffect(() => {
+    const today = new Date();
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const diffTime = Math.abs(todayMidnight.getTime() - ANCHOR_DATE.getTime());
+    const dayNumber = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+    setCurrentDay(dayNumber);
+
     const savedStats = localStorage.getItem("pipeline_stats");
-    if (savedStats) {
-      setStats(JSON.parse(savedStats));
+    if (savedStats) setStats(JSON.parse(savedStats));
+
+    const savedSavesStr = localStorage.getItem("pipeline_saves");
+    let initialMode: "DAILY" | "HARD_DAILY" | "UNLIMITED" = "DAILY";
+    
+    if (savedSavesStr) {
+       const savedSaves = JSON.parse(savedSavesStr);
+       // If save is from today, respect the last mode played
+       if (savedSaves.day === dayNumber && savedSaves.lastMode) {
+           initialMode = savedSaves.lastMode;
+       }
+    }
+
+    if (initialMode === "UNLIMITED") {
+        startUnlimitedMode();
+    } else {
+        loadAutomatedPuzzle(initialMode, dayNumber);
     }
   }, []);
 
-  const updateStats = (isWin: boolean) => {
+  // --- 2. THE PERSISTENCE ENGINE (Saves state on change) ---
+  useEffect(() => {
+    if (!currentDay) return;
+    
+    const existingSaveStr = localStorage.getItem("pipeline_saves");
+    let existingSave = existingSaveStr ? JSON.parse(existingSaveStr) : { day: currentDay };
+    
+    // Clear old saves if it's a new day
+    if (existingSave.day !== currentDay) {
+       existingSave = { day: currentDay };
+    }
+    
+    // Only save exact board state for Daily modes
+    if (gameMode !== "UNLIMITED") {
+        existingSave[gameMode] = { currentClub, anchorEra, chain, failedAttempts, gameState };
+    }
+    
+    // Always remember the mode they were in
+    existingSave.lastMode = gameMode;
+    
+    localStorage.setItem("pipeline_saves", JSON.stringify(existingSave));
+  }, [chain, failedAttempts, gameState, currentClub, anchorEra, gameMode, currentDay]);
+
+  const loadAutomatedPuzzle = (mode: "DAILY" | "HARD_DAILY", dayNum: number) => {
+    const isDaily = mode === "DAILY";
+    const pool = isDaily ? DAILY_POOL : HARDCORE_POOL;
+    const routeIdx = (dayNum - 1) % pool.length;
+    const config = pool[routeIdx];
+    const sClub = { id: config.start, name: config.start };
+    const tClub = { id: config.target, name: config.target };
+    
+    setStartClub(sClub);
+    setTargetClub(tClub);
+    setGameMode(mode);
+
+    // Check if they already have an active/finished run for today's puzzle
+    const savedStr = localStorage.getItem("pipeline_saves");
+    if (savedStr) {
+       const saved = JSON.parse(savedStr);
+       if (saved.day === dayNum && saved[mode]) {
+          const s = saved[mode];
+          setCurrentClub(s.currentClub);
+          setAnchorEra(s.anchorEra);
+          setChain(s.chain);
+          setFailedAttempts(s.failedAttempts);
+          setGameState(s.gameState);
+          return;
+       }
+    }
+
+    // Fresh start if no save exists
+    setCurrentClub(sClub);
+    setAnchorEra({ start: isDaily ? 2018 : 2014, end: isDaily ? 2018 : 2014, display: isDaily ? "2018" : "2014" });
+    setChain([]);
+    setFailedAttempts(0);
+    setGameState("PLAYING");
+    setMessage("");
+    setSearchQuery("");
+    setSearchResults([]);
+    setIsScouting(false);
+  };
+
+  const updateStats = (isWin: boolean, finalScore: number = 0, linksUsed: number = 0) => {
     if (gameMode === "UNLIMITED") return; 
 
     setStats(prev => {
+      const currentHistory = prev.history || [];
+      const filteredHistory = currentHistory.filter(h => h.day !== currentDay);
+      const newHistory = [...filteredHistory, { day: currentDay, score: finalScore, links: linksUsed, won: isWin }];
+      
+      // Keep only the last 7 entries
+      if (newHistory.length > 7) newHistory.shift();
+
       const newStats = {
         played: prev.played + 1,
         won: isWin ? prev.won + 1 : prev.won,
         currentStreak: isWin ? prev.currentStreak + 1 : 0,
-        maxStreak: isWin ? Math.max(prev.maxStreak, prev.currentStreak + 1) : prev.maxStreak
+        maxStreak: isWin ? Math.max(prev.maxStreak, prev.currentStreak + 1) : prev.maxStreak,
+        history: newHistory
       };
       localStorage.setItem("pipeline_stats", JSON.stringify(newStats));
       return newStats;
     });
   };
 
-  const startDailyMode = () => {
-    setGameMode("DAILY");
-    setStartClub(DAILY_PUZZLE.start);
-    setTargetClub(DAILY_PUZZLE.target);
-    setCurrentClub(DAILY_PUZZLE.start);
-    setAnchorEra({ start: 2018, end: 2018, display: "2018" }); 
-    resetBoard();
-  };
-
-  const startHardDailyMode = () => {
-    setGameMode("HARD_DAILY");
-    setStartClub(HARD_DAILY_PUZZLE.start);
-    setTargetClub(HARD_DAILY_PUZZLE.target);
-    setCurrentClub(HARD_DAILY_PUZZLE.start);
-    setAnchorEra({ start: 2014, end: 2014, display: "2014" }); 
-    resetBoard();
-  };
+  const startDailyMode = () => loadAutomatedPuzzle("DAILY", currentDay);
+  const startHardDailyMode = () => loadAutomatedPuzzle("HARD_DAILY", currentDay);
 
   const startUnlimitedMode = () => {
     let randomStart, randomTarget;
@@ -331,16 +481,21 @@ export default function Home() {
     } while (randomStart.id === randomTarget.id);
 
     setGameMode("UNLIMITED");
-    setStartClub(randomStart);
-    setTargetClub(randomTarget);
-    setCurrentClub(randomStart);
+    const sClub = { id: randomStart.name, name: randomStart.name };
+    const tClub = { id: randomTarget.name, name: randomTarget.name };
+    
+    setStartClub(sClub);
+    setTargetClub(tClub);
+    setCurrentClub(sClub);
     setAnchorEra(generateEraConstraint(randomStart.name));
-    resetBoard();
+    setChain([]);
+    setFailedAttempts(0);
+    setGameState("PLAYING");
+    setMessage("");
+    setSearchQuery("");
+    setSearchResults([]);
+    setIsScouting(false);
   };
-
-  useEffect(() => {
-    if (chain.length === 0 && gameMode === "DAILY") setAnchorEra({ start: 2018, end: 2018, display: "2018" });
-  }, []);
 
   const resetBoard = () => {
     setChain([]);
@@ -355,7 +510,7 @@ export default function Home() {
 
   useEffect(() => {
     const flexScoutQuery = async () => {
-      if (searchQuery.trim().length < 3 || gameState !== "PLAYING" || isScouting) {
+      if (searchQuery.trim().length < 3 || gameState !== "PLAYING" || isScouting || !currentClub.name) {
         setSearchResults([]);
         return;
       }
@@ -390,7 +545,7 @@ export default function Home() {
     };
     const delay = setTimeout(() => flexScoutQuery(), 400);
     return () => clearTimeout(delay);
-  }, [searchQuery, gameState, isScouting]);
+  }, [searchQuery, gameState, isScouting, currentClub]);
 
   const handlePlayerSelect = async (player: Player) => {
     setMessage(""); 
@@ -560,9 +715,7 @@ export default function Home() {
     }
 
     const canonicalCurrent = standardizeClubName(currentClub.name);
-    const isTier1 = TIER_1_MAJOR.includes(canonicalCurrent);
-    const isTier2 = TIER_2_MODERATE.includes(canonicalCurrent);
-    const isUnderdog = !isTier1 && !isTier2;
+    const isUnderdog = !isMajorOrModerate(canonicalCurrent);
 
     let rarity = calculateSlidingScalePoints(totalCurrentClubApps);
     if (isUnderdog) rarity += 75; 
@@ -578,7 +731,8 @@ export default function Home() {
       setCurrentClub(nextClub);
       setMessage("");
       setGameState("WON");
-      updateStats(true); 
+      const finalScore = newChain.reduce((sum, link) => sum + link.rarity, 0) * Math.max(1, newChain.length);
+      updateStats(true, finalScore, newChain.length); 
       setTimeout(() => setShowStats(true), 1500); 
     } else {
       setCurrentClub(nextClub);
@@ -595,7 +749,7 @@ export default function Home() {
     if (chain.length + failedAttempts + 1 >= MAX_LINKS && gameState !== "WON") {
       setGameState("LOST");
       setMessage("");
-      updateStats(false); 
+      updateStats(false, 0, 0); 
       setTimeout(() => setShowStats(true), 1500); 
     }
   };
@@ -611,11 +765,11 @@ export default function Home() {
     const grid = Array(MAX_LINKS).fill("⬛").map((_, i) => i < chain.length ? "🟩" : "⬛").join("");
     
     let header = "";
-    if (gameMode === "DAILY") header = `The Pipeline #${DAILY_PUZZLE.day}`;
-    else if (gameMode === "HARD_DAILY") header = `The Pipeline [HARDCORE] #${HARD_DAILY_PUZZLE.day} 🩸`;
+    if (gameMode === "DAILY") header = `The Pipeline #${currentDay}`;
+    else if (gameMode === "HARD_DAILY") header = `The Pipeline [HARDCORE] #${currentDay} 🩸`;
     else header = `The Pipeline (Unlimited Mode)`;
 
-    const currentUrl = typeof window !== 'undefined' ? window.location.origin : 'thepipeline.com';
+    const currentUrl = 'www.the-pipeline-beta.vercel.app';
 
     const text = `${header}\n⚽ ${startClub.name} ➡️ ${targetClub.name}\n\nScore: ${score} 📈\n${grid}\n\nPlay: ${currentUrl}`;
     navigator.clipboard.writeText(text);
@@ -624,6 +778,18 @@ export default function Home() {
 
   const totalMovesUsed = chain.length + failedAttempts;
   const winPercentage = stats.played > 0 ? Math.round((stats.won / stats.played) * 100) : 0;
+
+  // Render defensive empty load wrapper if puzzle calculations are syncing
+  if (!startClub.name) {
+    return (
+      <main className="min-h-screen bg-[#0B0F19] text-white flex items-center justify-center font-sans">
+        <div className="text-center">
+          <div className="w-10 h-10 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-400 font-bold tracking-widest text-xs uppercase">Assembling Timeline...</p>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-[#0B0F19] text-white flex flex-col items-center py-8 px-4 font-sans selection:bg-emerald-500/30">
@@ -644,7 +810,7 @@ export default function Home() {
               Statistics
             </h2>
 
-            <div className="grid grid-cols-4 gap-2 text-center mb-8">
+            <div className="grid grid-cols-4 gap-2 text-center mb-6">
               <div className="flex flex-col">
                 <span className="text-3xl font-black text-white">{stats.played}</span>
                 <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-1">Played</span>
@@ -662,6 +828,32 @@ export default function Home() {
                 <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-1">Max<br/>Streak</span>
               </div>
             </div>
+
+            {/* PAST 7 GAMES HISTORY */}
+            {stats.history && stats.history.length > 0 && (
+              <div className="mb-6">
+                <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 border-b border-slate-800 pb-2">Last 7 Games</h3>
+                <div className="space-y-2">
+                  {stats.history.map((h, i) => {
+                    const maxScore = Math.max(...(stats.history || []).map(x => x.score), 100);
+                    const widthPercent = h.won ? Math.max(15, (h.score / maxScore) * 100) : 100;
+                    return (
+                      <div key={i} className="flex items-center text-xs">
+                        <div className="w-12 text-slate-400 font-bold">Day {h.day}</div>
+                        <div className="flex-1 ml-2">
+                          <div 
+                            className={`h-5 flex items-center px-2 rounded-sm ${h.won ? 'bg-emerald-500 text-slate-900 font-black' : 'bg-red-500/20 text-red-400 font-bold'}`}
+                            style={{ width: `${widthPercent}%` }}
+                          >
+                            {h.won ? h.score : 'FAILED'}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {gameState === "WON" && (
               <button 
@@ -785,7 +977,7 @@ export default function Home() {
           THE PIPELINE
         </h1>
         
-        <div className="flex bg-white/5 rounded-xl p-1 mb-4 border border-white/10 gap-1">
+        <div className="flex bg-white/5 rounded-xl p-1 mb-2 border border-white/10 gap-1">
           <button 
             onClick={startDailyMode}
             className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-lg transition-all ${gameMode === "DAILY" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shadow-md" : "text-slate-400 hover:text-slate-200"}`}
@@ -806,16 +998,28 @@ export default function Home() {
           </button>
         </div>
 
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-slate-300 backdrop-blur-sm">
-          <span>
-            {gameMode === "DAILY" ? `Puzzle #${DAILY_PUZZLE.day}` : 
-             gameMode === "HARD_DAILY" ? `Hardcore #${HARD_DAILY_PUZZLE.day}` : 
-             "Random Draw"}
-          </span>
-          <span className="w-1 h-1 rounded-full bg-slate-600"></span>
-          <span className={`${totalMovesUsed >= MAX_LINKS - 1 ? 'text-red-400' : 'text-emerald-400'}`}>
-            Links: {totalMovesUsed}/{MAX_LINKS}
-          </span>
+        <div className="flex gap-2 justify-center items-center h-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-slate-300 backdrop-blur-sm">
+            <span>
+              {gameMode === "DAILY" ? `Puzzle #${currentDay}` : 
+               gameMode === "HARD_DAILY" ? `Hardcore #${currentDay}` : 
+               "Unlimited"}
+            </span>
+            <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+            <span className={`${totalMovesUsed >= MAX_LINKS - 1 ? 'text-red-400' : 'text-emerald-400'}`}>
+              Links: {totalMovesUsed}/{MAX_LINKS}
+            </span>
+          </div>
+          
+          {gameMode === "UNLIMITED" && gameState === "PLAYING" && (
+            <button 
+              onClick={startUnlimitedMode}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 transition-all active:scale-95 shadow-sm"
+              title="Generate New Match"
+            >
+              🔀 Randomise
+            </button>
+          )}
         </div>
       </div>
 
@@ -848,7 +1052,7 @@ export default function Home() {
                     <span className="text-[10px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider flex items-center gap-1.5">
                       <span>⚽ {link.appearances} {link.appearances === 1 ? 'App' : 'Apps'} for {link.fromClub.name}</span>
                       <span className="w-1 h-1 rounded-full bg-slate-600"></span>
-                      <span className="text-emerald-500">[{link.anchorEra.display === "ANY TIME" ? "ANY TIME" : link.anchorEra.display}]</span>
+                      <span className="text-emerald-500">[{link.anchorEra.display}]</span>
                     </span>
                   </div>
                 </div>
@@ -884,17 +1088,8 @@ export default function Home() {
           <div className="w-full flex flex-col gap-5">
             <div className="flex justify-center animate-in slide-in-from-bottom-2">
               <div className="bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-black px-5 py-2.5 rounded-xl text-sm shadow-[0_0_20px_rgba(52,211,153,0.15)] flex items-center gap-2 backdrop-blur-md uppercase tracking-wide">
-                {anchorEra.display === "ANY TIME" ? (
-                  <>
-                    <span>🌍</span>
-                    <span><strong>No Time Constraint</strong></span>
-                  </>
-                ) : (
-                  <>
-                    <span>⏳</span>
-                    <span>Must have played in <strong>{anchorEra.display}</strong></span>
-                  </>
-                )}
+                <span>⏳</span>
+                <span>Must have played in <strong>{anchorEra.display}</strong></span>
               </div>
             </div>
             
@@ -958,9 +1153,7 @@ export default function Home() {
             <div className="flex flex-col gap-3 max-h-60 overflow-y-auto pr-1">
               {routingOptions.map((club, idx) => {
                 const canonicalNext = standardizeClubName(club.name);
-                const isTier1Dest = TIER_1_MAJOR.includes(canonicalNext);
-                const isTier2Dest = TIER_2_MODERATE.includes(canonicalNext);
-                const isDestUnderdog = !isTier1Dest && !isTier2Dest;
+                const isDestUnderdog = !isMajorOrModerate(canonicalNext);
                 
                 return (
                   <button 
