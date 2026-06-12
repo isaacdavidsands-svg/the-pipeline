@@ -33,10 +33,86 @@ const DAILY_POOL = [
   { start: "Aston Villa", target: "Borussia Dortmund" },
   { start: "Newcastle United", target: "Ajax" },
   { start: "Arsenal", target: "FC Porto" },
-  { start: "Liverpool", target: "Juventus" },
-  { start: "Real Madrid", target: "Manchester City" },
-  { start: "Barcelona", target: "Chelsea" },
-  { start: "Bayern Munich", target: "Inter Milan" }
+  { start: "Liverpool", target: "Real Madrid" },
+  { start: "Juventus", target: "Chelsea" },
+  { start: "AC Milan", target: "Paris Saint-Germain" },
+  { start: "Inter Milan", target: "Manchester City" },
+  { start: "Tottenham Hotspur", target: "Barcelona" },
+  { start: "Atletico Madrid", target: "Manchester United" },
+  { start: "Borussia Dortmund", target: "Bayern Munich" },
+  { start: "Ajax", target: "Aston Villa" },
+  { start: "FC Porto", target: "Newcastle United" },
+  { start: "Chelsea", target: "Real Madrid" },
+  { start: "Manchester United", target: "Juventus" },
+  { start: "Arsenal", target: "Barcelona" },
+  { start: "Bayern Munich", target: "Liverpool" },
+  { start: "Paris Saint-Germain", target: "Manchester City" },
+  { start: "Real Madrid", target: "Inter Milan" },
+  { start: "Juventus", target: "Tottenham Hotspur" },
+  { start: "Barcelona", target: "AC Milan" },
+  { start: "Liverpool", target: "Atletico Madrid" },
+  { start: "Manchester City", target: "Borussia Dortmund" },
+  { start: "Inter Milan", target: "Ajax" },
+  { start: "AC Milan", target: "FC Porto" },
+  { start: "Tottenham Hotspur", target: "Paris Saint-Germain" },
+  { start: "Atletico Madrid", target: "Bayern Munich" },
+  { start: "Borussia Dortmund", target: "Chelsea" },
+  { start: "Ajax", target: "Manchester United" },
+  { start: "FC Porto", target: "Arsenal" },
+  { start: "Aston Villa", target: "Juventus" },
+  { start: "Newcastle United", target: "Real Madrid" },
+  { start: "Manchester City", target: "Barcelona" },
+  { start: "Liverpool", target: "Inter Milan" },
+  { start: "Chelsea", target: "AC Milan" },
+  { start: "Arsenal", target: "Atletico Madrid" },
+  { start: "Manchester United", target: "Borussia Dortmund" },
+  { start: "Bayern Munich", target: "Ajax" },
+  { start: "Paris Saint-Germain", target: "FC Porto" },
+  { start: "Real Madrid", target: "Tottenham Hotspur" },
+  { start: "Juventus", target: "Paris Saint-Germain" },
+  { start: "Barcelona", target: "Bayern Munich" },
+  { start: "Inter Milan", target: "Manchester United" },
+  { start: "AC Milan", target: "Arsenal" },
+  { start: "Atletico Madrid", target: "Chelsea" },
+  { start: "Borussia Dortmund", target: "Liverpool" },
+  { start: "Ajax", target: "Manchester City" },
+  { start: "FC Porto", target: "Real Madrid" },
+  { start: "Tottenham Hotspur", target: "Juventus" },
+  { start: "Aston Villa", target: "Barcelona" },
+  { start: "Newcastle United", target: "Inter Milan" },
+  { start: "Manchester City", target: "AC Milan" },
+  { start: "Liverpool", target: "Paris Saint-Germain" },
+  { start: "Chelsea", target: "Bayern Munich" },
+  { start: "Arsenal", target: "Borussia Dortmund" },
+  { start: "Manchester United", target: "Ajax" },
+  { start: "Real Madrid", target: "FC Porto" },
+  { start: "Juventus", target: "Atletico Madrid" },
+  { start: "Barcelona", target: "Tottenham Hotspur" },
+  { start: "Bayern Munich", target: "Manchester City" },
+  { start: "Paris Saint-Germain", target: "Liverpool" },
+  { start: "Inter Milan", target: "Chelsea" },
+  { start: "AC Milan", target: "Manchester United" },
+  { start: "Atletico Madrid", target: "Arsenal" },
+  { start: "Borussia Dortmund", target: "Real Madrid" },
+  { start: "Ajax", target: "Juventus" },
+  { start: "FC Porto", target: "Barcelona" },
+  { start: "Tottenham Hotspur", target: "Bayern Munich" },
+  { start: "Aston Villa", target: "Paris Saint-Germain" },
+  { start: "Newcastle United", target: "Inter Milan" },
+  { start: "Manchester City", target: "Atletico Madrid" },
+  { start: "Liverpool", target: "Borussia Dortmund" },
+  { start: "Chelsea", target: "Ajax" },
+  { start: "Arsenal", target: "Juventus" },
+  { start: "Manchester United", target: "Real Madrid" },
+  { start: "Bayern Munich", target: "Barcelona" },
+  { start: "Paris Saint-Germain", target: "Chelsea" },
+  { start: "Inter Milan", target: "Liverpool" },
+  { start: "AC Milan", target: "Manchester City" },
+  { start: "Atletico Madrid", target: "Tottenham Hotspur" },
+  { start: "Borussia Dortmund", target: "Arsenal" },
+  { start: "Ajax", target: "Bayern Munich" },
+  { start: "FC Porto", target: "Manchester United" },
+  { start: "Juventus", target: "Real Madrid" }
 ];
 
 const HARDCORE_POOL = [
@@ -51,7 +127,85 @@ const HARDCORE_POOL = [
   { start: "Olympique Lyonnais", target: "Galatasaray" },
   { start: "PSV Eindhoven", target: "Palmeiras" },
   { start: "Sporting CP", target: "Corinthians" },
-  { start: "FC Porto", target: "Boca Juniors" }
+  { start: "FC Porto", target: "Boca Juniors" },
+  { start: "Flamengo", target: "Benfica" },
+  { start: "Boca Juniors", target: "Marseille" },
+  { start: "River Plate", target: "Bayer Leverkusen" },
+  { start: "Sporting CP", target: "Roma" },
+  { start: "Napoli", target: "Sevilla" },
+  { start: "Rangers", target: "Villarreal" },
+  { start: "Ajax", target: "Olympique Lyonnais" },
+  { start: "Fluminense", target: "PSV Eindhoven" },
+  { start: "Galatasaray", target: "Shakhtar Donetsk" },
+  { start: "Palmeiras", target: "Celtic" },
+  { start: "Corinthians", target: "FC Porto" },
+  { start: "Benfica", target: "River Plate" },
+  { start: "Marseille", target: "Flamengo" },
+  { start: "Bayer Leverkusen", target: "Boca Juniors" },
+  { start: "Roma", target: "Sporting CP" },
+  { start: "Sevilla", target: "Napoli" },
+  { start: "Villarreal", target: "Rangers" },
+  { start: "Olympique Lyonnais", target: "Ajax" },
+  { start: "PSV Eindhoven", target: "Fluminense" },
+  { start: "Shakhtar Donetsk", target: "Galatasaray" },
+  { start: "Celtic", target: "Palmeiras" },
+  { start: "FC Porto", target: "Corinthians" },
+  { start: "Flamengo", target: "Sevilla" },
+  { start: "Boca Juniors", target: "Villarreal" },
+  { start: "River Plate", target: "Olympique Lyonnais" },
+  { start: "Sporting CP", target: "PSV Eindhoven" },
+  { start: "Napoli", target: "Shakhtar Donetsk" },
+  { start: "Rangers", target: "Celtic" },
+  { start: "Ajax", target: "FC Porto" },
+  { start: "Fluminense", target: "Flamengo" },
+  { start: "Galatasaray", target: "Boca Juniors" },
+  { start: "Palmeiras", target: "River Plate" },
+  { start: "Corinthians", target: "Sporting CP" },
+  { start: "Benfica", target: "Napoli" },
+  { start: "Marseille", target: "Rangers" },
+  { start: "Bayer Leverkusen", target: "Ajax" },
+  { start: "Roma", target: "Fluminense" },
+  { start: "Sevilla", target: "Galatasaray" },
+  { start: "Villarreal", target: "Palmeiras" },
+  { start: "Olympique Lyonnais", target: "Corinthians" },
+  { start: "PSV Eindhoven", target: "Benfica" },
+  { start: "Shakhtar Donetsk", target: "Marseille" },
+  { start: "Celtic", target: "Bayer Leverkusen" },
+  { start: "FC Porto", target: "Roma" },
+  { start: "Flamengo", target: "Ajax" },
+  { start: "Boca Juniors", target: "Fluminense" },
+  { start: "River Plate", target: "Galatasaray" },
+  { start: "Sporting CP", target: "Palmeiras" },
+  { start: "Napoli", target: "Corinthians" },
+  { start: "Rangers", target: "Benfica" },
+  { start: "Ajax", target: "Marseille" },
+  { start: "Fluminense", target: "Bayer Leverkusen" },
+  { start: "Galatasaray", target: "Roma" },
+  { start: "Palmeiras", target: "Sevilla" },
+  { start: "Corinthians", target: "Villarreal" },
+  { start: "Benfica", target: "Olympique Lyonnais" },
+  { start: "Marseille", target: "PSV Eindhoven" },
+  { start: "Bayer Leverkusen", target: "Shakhtar Donetsk" },
+  { start: "Roma", target: "Celtic" },
+  { start: "Sevilla", target: "FC Porto" },
+  { start: "Villarreal", target: "Flamengo" },
+  { start: "Olympique Lyonnais", target: "Boca Juniors" },
+  { start: "PSV Eindhoven", target: "River Plate" },
+  { start: "Shakhtar Donetsk", target: "Sporting CP" },
+  { start: "Celtic", target: "Napoli" },
+  { start: "FC Porto", target: "Rangers" },
+  { start: "Flamengo", target: "Palmeiras" },
+  { start: "Boca Juniors", target: "Corinthians" },
+  { start: "River Plate", target: "Benfica" },
+  { start: "Sporting CP", target: "Marseille" },
+  { start: "Napoli", target: "Bayer Leverkusen" },
+  { start: "Rangers", target: "Roma" },
+  { start: "Ajax", target: "Sevilla" },
+  { start: "Fluminense", target: "Villarreal" },
+  { start: "Galatasaray", target: "Olympique Lyonnais" },
+  { start: "Palmeiras", target: "PSV Eindhoven" },
+  { start: "Corinthians", target: "Shakhtar Donetsk" },
+  { start: "Benfica", target: "FC Porto" }
 ];
 
 // ============================================================================
@@ -64,22 +218,11 @@ const TIER_1_MAJOR = [
 ];
 
 const TIER_2_MODERATE = [
-  // Remaining Premier League (Roughly Top 14)
   "West Ham United", "Brighton & Hove Albion", "Fulham", "Bournemouth", "Crystal Palace", "Brentford",
-  
-  // Italy (Serie A) - Top 3
   "Juventus", "AC Milan", "Inter Milan",
-  
-  // Spain (La Liga) - Top 3 non-giants
   "Atletico Madrid", "Sevilla", "Real Sociedad",
-  
-  // Germany (Bundesliga) - Top 3 non-giants
   "Borussia Dortmund", "Bayer Leverkusen", "RB Leipzig",
-  
-  // France (Ligue 1) - Top 3 non-giants
   "Olympique Lyonnais", "Marseille", "AS Monaco",
-  
-  // Rest of the World Elite
   "Ajax", "FC Porto", "Sporting CP", "Celtic", "Rangers"
 ];
 
@@ -104,9 +247,7 @@ const getFlag = (nationality: string) => {
 
 // --- DYNAMIC VIBRANT COLOR ENGINE ---
 const getClubStyle = (clubName: string) => {
-  // Hardcoded true colors for TIER 1 and TIER 2 clubs
   const styles: Record<string, string> = {
-    // --- TIER 1 ---
     "Manchester City": "from-[#6CABDD] to-[#1C2C5B] text-white border-[#6CABDD]/50",
     "Arsenal": "from-[#EF0107] to-[#9C0004] text-white border-white/50",
     "Liverpool": "from-[#C8102E] to-[#8A0A1F] text-white border-[#00B2A9]/50",
@@ -120,7 +261,6 @@ const getClubStyle = (clubName: string) => {
     "Bayern Munich": "from-[#DC052D] to-[#98041F] text-white border-white/50",
     "Paris Saint-Germain": "from-[#004170] to-[#002B4A] text-white border-[#DA291C]/50",
 
-    // --- TIER 2 ---
     "West Ham United": "from-[#7A263A] to-[#1BB1E7] text-white border-[#1BB1E7]/50",
     "Brighton & Hove Albion": "from-[#0057B8] to-white text-slate-900 border-[#0057B8]/50",
     "Fulham": "from-white to-slate-200 text-slate-900 border-black",
@@ -150,14 +290,12 @@ const getClubStyle = (clubName: string) => {
     "Celtic": "from-[#005C3B] to-white text-slate-900 border-[#005C3B]/50",
     "Rangers": "from-[#1B458F] to-[#14336B] text-white border-[#E30613]/50",
 
-    // Handful of common hard defaults used in puzzle start/targets
     "Shakhtar Donetsk": "from-[#FC4C02] to-black text-white border-[#FC4C02]/50",
     "Flamengo": "from-[#C90E10] to-black text-white border-[#C90E10]/50",
   };
 
   if (styles[clubName]) return styles[clubName];
 
-  // The Dynamic Fallback Engine for the remaining underdog clubs
   const vibrantGradients = [
     "from-emerald-500 to-teal-700 text-white border-emerald-400/50",
     "from-rose-500 to-red-700 text-white border-rose-400/50",
@@ -178,7 +316,6 @@ const getClubStyle = (clubName: string) => {
   return vibrantGradients[index];
 };
 
-// --- THE ALIAS INTERCEPTOR & MASTER DICTIONARY ---
 const getCanonicalName = (rawName: string) => {
   if (!rawName) return "";
   let lower = rawName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -243,67 +380,39 @@ const generateEraConstraint = (clubName: string): Era => {
     if (roll <= 59) startYear = Math.floor(Math.random() * (2024 - 2016 + 1)) + 2016; 
     else if (roll <= 87) startYear = Math.floor(Math.random() * (2015 - 2009 + 1)) + 2009;
     else startYear = Math.floor(Math.random() * (2008 - 2003 + 1)) + 2003;
-    
     return { start: startYear, end: startYear, display: String(startYear) };
-
   } else if (isTier2) {
     let startYear;
     if (roll <= 59) startYear = Math.floor(Math.random() * (2024 - 2016 + 1)) + 2016; 
     else if (roll <= 87) startYear = Math.floor(Math.random() * (2015 - 2009 + 1)) + 2009;
     else startYear = Math.floor(Math.random() * (2008 - 2003 + 1)) + 2003;
-
     const safeStart = Math.min(startYear, 2019); 
     return { start: safeStart, end: safeStart + 5, display: `${safeStart} - ${safeStart + 5}` };
-
   } else {
     const endYear = Math.floor(Math.random() * (2024 - 2022 + 1)) + 2022; 
     const startYear = Math.max(2003, endYear - 14); 
-    
     return { start: startYear, end: endYear, display: `${startYear} - ${endYear}` };
   }
 };
 
 const checkClubMatch = (dbClub: string, targetClub: string) => {
   if (!dbClub || !targetClub) return false;
-  
   const canonicalDb = getCanonicalName(dbClub).toLowerCase();
   const canonicalTarget = getCanonicalName(targetClub).toLowerCase();
-
   if (canonicalDb === canonicalTarget) return true;
-
   const baseDb = canonicalDb.replace(/[^a-z]/g, "");
   const baseTarget = canonicalTarget.replace(/[^a-z]/g, "");
-  
   if (baseDb === baseTarget) return true;
   if (baseDb.includes(baseTarget) || baseTarget.includes(baseDb)) return true;
-  
   return false;
 };
 
 const isValidSeniorTeam = (clubName: string) => {
   const lower = clubName.toLowerCase();
-  
-  if (lower.includes("without club")) return false;
-  if (lower.includes("retired")) return false;
-  if (lower.includes("unknown")) return false;
-  if (lower.includes("career break")) return false;
-  if (lower.includes("ban")) return false;
-
-  if (/\bu\d{2}\b/.test(lower)) return false; 
-  if (/\bunder[ -]?\d{2}\b/.test(lower)) return false; 
-  
-  if (/\byouth\b/.test(lower)) return false;
-  if (/\byout\b/.test(lower)) return false; 
-  if (/\byth\.?\b/.test(lower)) return false;
-  if (/\breserves?\b/.test(lower)) return false;
-  if (/\bacademy\b/.test(lower)) return false;
-  
-  if (/\bii\b/.test(lower)) return false; 
-  if (/\s+b$/.test(lower)) return false; 
-  if (/\bpromesas\b/.test(lower)) return false;
-  if (/\bcastilla\b/.test(lower)) return false;
-  if (/\bprimavera\b/.test(lower)) return false;
-  
+  if (lower.includes("without club") || lower.includes("retired") || lower.includes("unknown") || lower.includes("career break") || lower.includes("ban")) return false;
+  if (/\bu\d{2}\b/.test(lower) || /\bunder[ -]?\d{2}\b/.test(lower)) return false; 
+  if (/\byouth\b/.test(lower) || /\byout\b/.test(lower) || /\byth\.?\b/.test(lower) || /\breserves?\b/.test(lower) || /\bacademy\b/.test(lower)) return false;
+  if (/\bii\b/.test(lower) || /\s+b$/.test(lower) || /\bpromesas\b/.test(lower) || /\bcastilla\b/.test(lower) || /\bprimavera\b/.test(lower)) return false;
   return true;
 };
 
@@ -311,52 +420,89 @@ const calculateSlidingScalePoints = (appearances: number) => {
   if (appearances <= 0) return 0;
   if (appearances <= 5) return 150;
   if (appearances >= 100) return 15;
-
   let minApps, maxApps, minPts, maxPts;
+  if (appearances <= 10) { minApps = 6; maxApps = 10; minPts = 139; maxPts = 125; }
+  else if (appearances <= 15) { minApps = 10; maxApps = 15; minPts = 125; maxPts = 117; }
+  else if (appearances <= 20) { minApps = 15; maxApps = 20; minPts = 117; maxPts = 110; }
+  else if (appearances <= 39) { minApps = 20; maxApps = 39; minPts = 110; maxPts = 80; }
+  else { minApps = 39; maxApps = 100; minPts = 80; maxPts = 15; }
+  return Math.round(minPts + ((appearances - minApps) * (maxPts - minPts)) / (maxApps - minApps));
+};
 
-  if (appearances <= 10) {
-    minApps = 6; maxApps = 10; minPts = 139; maxPts = 125;
-  } else if (appearances <= 15) {
-    minApps = 10; maxApps = 15; minPts = 125; maxPts = 117;
-  } else if (appearances <= 20) {
-    minApps = 15; maxApps = 20; minPts = 117; maxPts = 110;
-  } else if (appearances <= 39) {
-    minApps = 20; maxApps = 39; minPts = 110; maxPts = 80;
-  } else {
-    minApps = 39; maxApps = 100; minPts = 80; maxPts = 15;
-  }
-
-  const points = minPts + ((appearances - minApps) * (maxPts - minPts)) / (maxApps - minApps);
-  return Math.round(points);
+const getLiveScore = (chainList: ChainLink[]) => {
+  const baseScore = chainList.reduce((sum, link) => sum + link.rarity, 0);
+  const multiplier = Math.max(1, chainList.length);
+  return baseScore * multiplier;
 };
 
 export default function Home() {
-  const [gameMode, setGameMode] = useState<"DAILY" | "HARD_DAILY" | "UNLIMITED">("DAILY");
+  const [gameMode, setGameMode] = useState<"DAILY" | "HARD_DAILY" | "UNLIMITED" | "MULTIPLAYER">("DAILY");
   const [startClub, setStartClub] = useState<Club>({ id: "", name: "" });
   const [targetClub, setTargetClub] = useState<Club>({ id: "", name: "" });
   const [currentDay, setCurrentDay] = useState<number>(0);
   
+  // Rules are now hardcoded to show automatically on load!
   const [showRules, setShowRules] = useState(true);
   const [showStats, setShowStats] = useState(false);
   const [stats, setStats] = useState<GameStats>({ played: 0, won: 0, currentStreak: 0, maxStreak: 0, history: [] });
 
-  const [currentClub, setCurrentClub] = useState<Club>({ id: "", name: "" });
-  const [anchorEra, setAnchorEra] = useState<Era>({ start: 2018, end: 2018, display: "2018" });
+  // Standard Solo State
   const [chain, setChain] = useState<ChainLink[]>([]);
+  const [anchorEra, setAnchorEra] = useState<Era>({ start: 2018, end: 2018, display: "2018" });
   const [failedAttempts, setFailedAttempts] = useState<number>(0);
+  const [gameState, setGameState] = useState<"PLAYING" | "ROUTING" | "WON" | "LOST">("PLAYING");
+
+  // Multiplayer State
+  const [showMultiplayerSetup, setShowMultiplayerSetup] = useState(false);
+  const [player1Name, setPlayer1Name] = useState("Player 1");
+  const [player2Name, setPlayer2Name] = useState("Player 2");
+  const [currentTurn, setCurrentTurn] = useState<1 | 2>(1);
+  const [multiplayerWinner, setMultiplayerWinner] = useState<string | null>(null);
+  const [usedPlayerIds, setUsedPlayerIds] = useState<string[]>([]);
+  const [pvpScores, setPvpScores] = useState<{p1: number, p2: number}>({p1: 0, p2: 0});
+  
+  const [chain1, setChain1] = useState<ChainLink[]>([]);
+  const [chain2, setChain2] = useState<ChainLink[]>([]);
+  const [anchorEra1, setAnchorEra1] = useState<Era>({ start: 2018, end: 2018, display: "2018" });
+  const [anchorEra2, setAnchorEra2] = useState<Era>({ start: 2018, end: 2018, display: "2018" });
+  const [failedAttempts1, setFailedAttempts1] = useState<number>(0);
+  const [failedAttempts2, setFailedAttempts2] = useState<number>(0);
+  const [p1Status, setP1Status] = useState<"PLAYING" | "FINISHED" | "LOST">("PLAYING");
+  const [p2Status, setP2Status] = useState<"PLAYING" | "FINISHED" | "LOST">("PLAYING");
+
+  // Derived Active State Accessors (Ensures NO empty club desync bugs)
+  const derivedClubSolo = chain.length > 0 ? chain[chain.length - 1].toClub : startClub;
+  const derivedClub1 = chain1.length > 0 ? chain1[chain1.length - 1].toClub : startClub;
+  const derivedClub2 = chain2.length > 0 ? chain2[chain2.length - 1].toClub : startClub;
+
+  const activeChain = gameMode === "MULTIPLAYER" ? (currentTurn === 1 ? chain1 : chain2) : chain;
+  const activeClub = gameMode === "MULTIPLAYER" ? (currentTurn === 1 ? derivedClub1 : derivedClub2) : derivedClubSolo;
+  const activeEra = gameMode === "MULTIPLAYER" ? (currentTurn === 1 ? anchorEra1 : anchorEra2) : anchorEra;
+  const activeFailed = gameMode === "MULTIPLAYER" ? (currentTurn === 1 ? failedAttempts1 : failedAttempts2) : failedAttempts;
+
+  const setActiveChain = (newChain: ChainLink[]) => {
+    if (gameMode !== "MULTIPLAYER") setChain(newChain);
+    else currentTurn === 1 ? setChain1(newChain) : setChain2(newChain);
+  };
+  const setActiveEra = (era: Era) => {
+    if (gameMode !== "MULTIPLAYER") setAnchorEra(era);
+    else currentTurn === 1 ? setAnchorEra1(era) : setAnchorEra2(era);
+  };
+  const setActiveFailed = (failed: number) => {
+    if (gameMode !== "MULTIPLAYER") setFailedAttempts(failed);
+    else currentTurn === 1 ? setFailedAttempts1(failed) : setFailedAttempts2(failed);
+  };
   
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Player[]>([]);
   const [message, setMessage] = useState(""); 
-  const [gameState, setGameState] = useState<"PLAYING" | "ROUTING" | "WON" | "LOST">("PLAYING");
   const [isScouting, setIsScouting] = useState(false); 
   
   const [routingPlayer, setRoutingPlayer] = useState<Player | null>(null);
   const [routingOptions, setRoutingOptions] = useState<Club[]>([]);
-  
   const [activePlayerPerformances, setActivePlayerPerformances] = useState<any[]>([]);
 
-  // --- 1. INITIAL MOUNT & SAVE RESTORATION ---
+  // --- INITIAL MOUNT & SAVE RESTORATION ---
   useEffect(() => {
     const today = new Date();
     const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -368,45 +514,44 @@ export default function Home() {
     if (savedStats) setStats(JSON.parse(savedStats));
 
     const savedSavesStr = localStorage.getItem("pipeline_saves");
-    let initialMode: "DAILY" | "HARD_DAILY" | "UNLIMITED" = "DAILY";
+    let initialMode: "DAILY" | "HARD_DAILY" | "UNLIMITED" | "MULTIPLAYER" = "DAILY";
     
     if (savedSavesStr) {
        const savedSaves = JSON.parse(savedSavesStr);
-       // If save is from today, respect the last mode played
        if (savedSaves.day === dayNumber && savedSaves.lastMode) {
            initialMode = savedSaves.lastMode;
        }
+       if (savedSaves.pvpScores) {
+           setPvpScores(savedSaves.pvpScores);
+       }
     }
 
-    if (initialMode === "UNLIMITED") {
-        startUnlimitedMode();
-    } else {
-        loadAutomatedPuzzle(initialMode, dayNumber);
-    }
+    if (initialMode === "UNLIMITED") startUnlimitedMode();
+    else if (initialMode === "MULTIPLAYER") setShowMultiplayerSetup(true); 
+    else loadAutomatedPuzzle(initialMode, dayNumber);
   }, []);
 
-  // --- 2. THE PERSISTENCE ENGINE (Saves state on change) ---
+  const closeRules = () => {
+    setShowRules(false);
+  };
+
+  // --- PERSISTENCE ENGINE ---
   useEffect(() => {
     if (!currentDay) return;
     
     const existingSaveStr = localStorage.getItem("pipeline_saves");
     let existingSave = existingSaveStr ? JSON.parse(existingSaveStr) : { day: currentDay };
     
-    // Clear old saves if it's a new day
-    if (existingSave.day !== currentDay) {
-       existingSave = { day: currentDay };
+    if (existingSave.day !== currentDay) existingSave = { day: currentDay };
+    
+    if (gameMode !== "UNLIMITED" && gameMode !== "MULTIPLAYER") {
+        existingSave[gameMode] = { anchorEra, chain, failedAttempts, gameState };
     }
     
-    // Only save exact board state for Daily modes
-    if (gameMode !== "UNLIMITED") {
-        existingSave[gameMode] = { currentClub, anchorEra, chain, failedAttempts, gameState };
-    }
-    
-    // Always remember the mode they were in
     existingSave.lastMode = gameMode;
-    
+    existingSave.pvpScores = pvpScores;
     localStorage.setItem("pipeline_saves", JSON.stringify(existingSave));
-  }, [chain, failedAttempts, gameState, currentClub, anchorEra, gameMode, currentDay]);
+  }, [chain, failedAttempts, gameState, anchorEra, gameMode, currentDay, pvpScores]);
 
   const loadAutomatedPuzzle = (mode: "DAILY" | "HARD_DAILY", dayNum: number) => {
     const isDaily = mode === "DAILY";
@@ -420,24 +565,20 @@ export default function Home() {
     setTargetClub(tClub);
     setGameMode(mode);
 
-    // Check if they already have an active/finished run for today's puzzle
     const savedStr = localStorage.getItem("pipeline_saves");
     if (savedStr) {
        const saved = JSON.parse(savedStr);
        if (saved.day === dayNum && saved[mode]) {
           const s = saved[mode];
-          setCurrentClub(s.currentClub);
-          setAnchorEra(s.anchorEra);
-          setChain(s.chain);
-          setFailedAttempts(s.failedAttempts);
-          setGameState(s.gameState);
+          setAnchorEra(s.anchorEra || generateEraConstraint(config.start));
+          setChain(s.chain || []);
+          setFailedAttempts(s.failedAttempts || 0);
+          setGameState(s.gameState || "PLAYING");
           return;
        }
     }
 
-    // Fresh start if no save exists
-    setCurrentClub(sClub);
-    setAnchorEra({ start: isDaily ? 2018 : 2014, end: isDaily ? 2018 : 2014, display: isDaily ? "2018" : "2014" });
+    setAnchorEra(generateEraConstraint(config.start));
     setChain([]);
     setFailedAttempts(0);
     setGameState("PLAYING");
@@ -448,14 +589,12 @@ export default function Home() {
   };
 
   const updateStats = (isWin: boolean, finalScore: number = 0, linksUsed: number = 0) => {
-    if (gameMode === "UNLIMITED") return; 
+    if (gameMode === "UNLIMITED" || gameMode === "MULTIPLAYER") return; 
 
     setStats(prev => {
       const currentHistory = prev.history || [];
       const filteredHistory = currentHistory.filter(h => h.day !== currentDay);
       const newHistory = [...filteredHistory, { day: currentDay, score: finalScore, links: linksUsed, won: isWin }];
-      
-      // Keep only the last 7 entries
       if (newHistory.length > 7) newHistory.shift();
 
       const newStats = {
@@ -486,7 +625,6 @@ export default function Home() {
     
     setStartClub(sClub);
     setTargetClub(tClub);
-    setCurrentClub(sClub);
     setAnchorEra(generateEraConstraint(randomStart.name));
     setChain([]);
     setFailedAttempts(0);
@@ -497,20 +635,42 @@ export default function Home() {
     setIsScouting(false);
   };
 
-  const resetBoard = () => {
-    setChain([]);
-    setFailedAttempts(0);
+  const startMultiplayerMode = () => {
+    let randomStart, randomTarget;
+    do {
+      randomStart = TARGETABLE_CLUBS[Math.floor(Math.random() * TARGETABLE_CLUBS.length)];
+      randomTarget = TARGETABLE_CLUBS[Math.floor(Math.random() * TARGETABLE_CLUBS.length)];
+    } while (randomStart.id === randomTarget.id);
+
+    setGameMode("MULTIPLAYER");
+    setShowMultiplayerSetup(false);
+    
+    const sClub = { id: randomStart.name, name: randomStart.name };
+    const tClub = { id: randomTarget.name, name: randomTarget.name };
+    const startingEra = generateEraConstraint(randomStart.name);
+    
+    setStartClub(sClub);
+    setTargetClub(tClub);
+    
+    setChain1([]); setChain2([]);
+    setAnchorEra1(startingEra); setAnchorEra2(startingEra);
+    setFailedAttempts1(0); setFailedAttempts2(0);
+    setP1Status("PLAYING"); setP2Status("PLAYING");
+    
+    setUsedPlayerIds([]);
+    setCurrentTurn(1);
+    setMultiplayerWinner(null);
     setGameState("PLAYING");
     setMessage("");
     setSearchQuery("");
     setSearchResults([]);
-    setActivePlayerPerformances([]);
     setIsScouting(false);
   };
 
   useEffect(() => {
     const flexScoutQuery = async () => {
-      if (searchQuery.trim().length < 3 || gameState !== "PLAYING" || isScouting || !currentClub.name) {
+      // Use activeClub directly. We know it will never be blank.
+      if (searchQuery.trim().length < 3 || gameState !== "PLAYING" || isScouting || !activeClub?.name) {
         setSearchResults([]);
         return;
       }
@@ -525,10 +685,7 @@ export default function Home() {
           .order("date_of_birth", { ascending: true, nullsFirst: false }) 
           .limit(20);
 
-        if (error) {
-          setMessage(`⚠️ Search Error: ${error.message}`);
-          return;
-        }
+        if (error) { setMessage(`⚠️ Search Error: ${error.message}`); return; }
 
         if (data) {
           setSearchResults(data.map(p => ({
@@ -545,13 +702,74 @@ export default function Home() {
     };
     const delay = setTimeout(() => flexScoutQuery(), 400);
     return () => clearTimeout(delay);
-  }, [searchQuery, gameState, isScouting, currentClub]);
+  }, [searchQuery, gameState, isScouting, activeClub]);
+
+  const checkPvPMatchEnd = (newP1Status: string, newP2Status: string, updatedActiveChain: ChainLink[]) => {
+      if (newP1Status !== "PLAYING" && newP2Status !== "PLAYING") {
+          let winner = null;
+          const score1 = currentTurn === 1 ? getLiveScore(updatedActiveChain) : getLiveScore(chain1);
+          const score2 = currentTurn === 2 ? getLiveScore(updatedActiveChain) : getLiveScore(chain2);
+
+          if (newP1Status === "FINISHED" && newP2Status === "LOST") winner = player1Name;
+          else if (newP2Status === "FINISHED" && newP1Status === "LOST") winner = player2Name;
+          else if (newP1Status === "FINISHED" && newP2Status === "FINISHED") {
+              if (score1 > score2) winner = player1Name;
+              else if (score2 > score1) winner = player2Name;
+              else winner = "Tie";
+          } else {
+              winner = "Nobody";
+          }
+          
+          setMultiplayerWinner(winner);
+          setGameState("WON");
+          setTimeout(() => setShowStats(true), 1500);
+      } else {
+          // Pass turn to whoever is still active
+          if (newP1Status === "PLAYING" && newP2Status !== "PLAYING") setCurrentTurn(1);
+          else if (newP2Status === "PLAYING" && newP1Status !== "PLAYING") setCurrentTurn(2);
+          else setCurrentTurn(prev => prev === 1 ? 2 : 1);
+      }
+  };
+
+  const processFailure = (errorMsg: string) => {
+      setMessage(errorMsg);
+      const newFailed = activeFailed + 1;
+      setActiveFailed(newFailed);
+      
+      const isBust = activeChain.length + newFailed >= MAX_LINKS;
+
+      if (gameMode === "MULTIPLAYER") {
+          let newP1Status = p1Status;
+          let newP2Status = p2Status;
+
+          if (isBust) {
+              if (currentTurn === 1) newP1Status = "LOST";
+              else newP2Status = "LOST";
+          }
+          if (currentTurn === 1) setP1Status(newP1Status);
+          else setP2Status(newP2Status);
+
+          checkPvPMatchEnd(newP1Status, newP2Status, activeChain);
+      } else {
+          if (isBust) {
+              setGameState("LOST");
+              updateStats(false, 0, 0);
+              setTimeout(() => setShowStats(true), 1500);
+          }
+      }
+      setIsScouting(false);
+  };
 
   const handlePlayerSelect = async (player: Player) => {
     setMessage(""); 
     setSearchResults([]);
     setSearchQuery(""); 
     setIsScouting(true); 
+
+    if (gameMode === "MULTIPLAYER" && usedPlayerIds.includes(String(player.id))) {
+        processFailure(`❌ ${player.name} has already been chosen in this match!`);
+        return;
+    }
 
     try {
       const { data: transfers, error: txError } = await supabase
@@ -560,102 +778,70 @@ export default function Home() {
         .eq("player_id", player.id)
         .limit(10000);
 
-      if (txError) {
-        setMessage(`⚠️ Transfer Fetch Error: ${txError.message}`);
-        return;
+      if (txError) { setMessage(`⚠️ Transfer Fetch Error: ${txError.message}`); return; }
+      if (!transfers || transfers.length === 0) { 
+        processFailure(`❌ ${player.name} has no career transfers in this dataset.`);
+        return; 
       }
 
-      if (!transfers || transfers.length === 0) {
-        setMessage(`❌ ${player.name} has no career transfers in this dataset.`);
-        return;
-      }
-
-      const { data: performances, error: perfError } = await supabase
-        .from("player_performances")
-        .select("*")
-        .eq("player_id", player.id)
-        .limit(10000);
-
-      if (perfError) {
-        console.error("Supabase Error:", perfError.message);
-      }
-
+      const { data: performances } = await supabase.from("player_performances").select("*").eq("player_id", player.id).limit(10000);
       const cachedPerformances = performances || [];
       setActivePlayerPerformances(cachedPerformances);
 
       const playerClubNames = new Set<string>();
-      
       transfers.forEach(t => { 
         if (t.from_team_name && isValidSeniorTeam(t.from_team_name)) playerClubNames.add(t.from_team_name); 
         if (t.to_team_name && isValidSeniorTeam(t.to_team_name)) playerClubNames.add(t.to_team_name); 
       });
       
       let safeTeamKey = 'team_name';
-      
       if (cachedPerformances.length > 0) {
         const sampleRow = cachedPerformances[0];
         safeTeamKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase() === 'team_name') || 'team_name';
-        
         cachedPerformances.forEach(p => {
           if (p[safeTeamKey]) {
             const tName = String(p[safeTeamKey]);
-            if (isValidSeniorTeam(tName)) {
-              playerClubNames.add(tName);
-            }
+            if (isValidSeniorTeam(tName)) playerClubNames.add(tName);
           }
         });
       }
 
       let playedForCurrentClub = false;
       for (const club of playerClubNames) {
-        if (checkClubMatch(club, currentClub.name)) {
+        if (checkClubMatch(club, activeClub.name)) {
           playedForCurrentClub = true;
           break;
         }
       }
 
       if (!playedForCurrentClub) {
-        setFailedAttempts(prev => prev + 1);
         const knownClubs = Array.from(playerClubNames).slice(0, 3).join(", ");
-        setMessage(`❌ Incorrect. DB says ${player.name} played for: ${knownClubs}... but not ${currentClub.name}.`);
-        checkLossCondition();
+        processFailure(`❌ Incorrect. DB says ${player.name} played for: ${knownClubs}... but not ${activeClub.name}.`);
         return;
       }
 
       if (cachedPerformances.length > 0) {
           const currentClubPerformances = cachedPerformances.filter(p => {
               const teamVal = p[safeTeamKey];
-              return teamVal && checkClubMatch(String(teamVal), currentClub.name);
+              return teamVal && checkClubMatch(String(teamVal), activeClub.name);
           });
           
           const sampleRow = cachedPerformances[0];
           const safePitchKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase().includes('pitch') || k.trim().toLowerCase().includes('appearances')) || 'nb_on_pitch';
-          
           const totalCurrentClubApps = currentClubPerformances.reduce((sum, current) => sum + (Number(current[safePitchKey]) || 0), 0);
 
           if (totalCurrentClubApps <= 0) {
-              setFailedAttempts(prev => prev + 1);
-              setMessage(`❌ ${player.name} was at ${currentClub.name}, but registered 0 senior appearances.`);
-              checkLossCondition();
+              processFailure(`❌ ${player.name} was at ${activeClub.name}, but registered 0 senior appearances.`);
               return;
           }
 
           const searchTerms: string[] = [];
-          for (let y = anchorEra.start; y <= anchorEra.end; y++) {
+          for (let y = activeEra.start; y <= activeEra.end; y++) {
               const yearStr = String(y);
               const shortStr = yearStr.slice(2);
               const nextShort = String(y + 1).slice(2);
               const prevShort = String(y - 1).slice(2);
-              
-              searchTerms.push(
-                  yearStr,
-                  `${yearStr}/${nextShort}`,
-                  `${y - 1}/${shortStr}`,
-                  `${shortStr}/${nextShort}`,
-                  `${prevShort}/${shortStr}`,
-                  `${yearStr}/${y + 1}`,
-                  `${y - 1}/${yearStr}`
-              );
+              searchTerms.push(yearStr, `${yearStr}/${nextShort}`, `${y - 1}/${shortStr}`, `${shortStr}/${nextShort}`, `${prevShort}/${shortStr}`, `${yearStr}/${y + 1}`, `${y - 1}/${yearStr}`);
           }
 
           const playedInEra = currentClubPerformances.some(p => {
@@ -664,17 +850,14 @@ export default function Home() {
           });
 
           if (!playedInEra && currentClubPerformances.length > 0) {
-              setFailedAttempts(prev => prev + 1);
-              setMessage(`❌ ${player.name} played for ${currentClub.name}, but DB has no record of them there between ${anchorEra.display}.`);
-              checkLossCondition();
+              processFailure(`❌ ${player.name} played for ${activeClub.name}, but DB has no record of them there between ${activeEra.display}.`);
               return;
           }
       }
       
       const destinationClubsMap = new Map<string, Club>();
-      
       playerClubNames.forEach(rawClubName => {
-          if (!checkClubMatch(rawClubName, currentClub.name)) {
+          if (!checkClubMatch(rawClubName, activeClub.name)) {
               const canonicalName = standardizeClubName(rawClubName);
               if (!destinationClubsMap.has(canonicalName)) {
                   destinationClubsMap.set(canonicalName, { id: canonicalName, name: canonicalName });
@@ -690,10 +873,10 @@ export default function Home() {
         setGameState("ROUTING");
         setMessage("");
       } else {
-        setMessage(`❌ ${player.name} is a dead end.`);
+        processFailure(`❌ ${player.name} is a dead end.`);
       }
     } catch (e) {
-      setMessage("⚠️ Connection error fetching transfer pathways.");
+      processFailure("⚠️ Connection error fetching transfer pathways.");
     } finally {
       setIsScouting(false); 
     }
@@ -703,84 +886,127 @@ export default function Home() {
     if (!routingPlayer) return;
     
     let totalCurrentClubApps = 0;
-
     if (activePlayerPerformances.length > 0) {
       const sampleRow = activePlayerPerformances[0];
       const safeTeamKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase() === 'team_name') || 'team_name';
       const safePitchKey = Object.keys(sampleRow).find(k => k.trim().toLowerCase().includes('pitch') || k.trim().toLowerCase().includes('appearances')) || 'nb_on_pitch';
 
       totalCurrentClubApps = activePlayerPerformances
-        .filter(p => p[safeTeamKey] && checkClubMatch(String(p[safeTeamKey]), currentClub.name))
+        .filter(p => p[safeTeamKey] && checkClubMatch(String(p[safeTeamKey]), activeClub.name))
         .reduce((sum, current) => sum + (Number(current[safePitchKey]) || 0), 0);
     }
 
-    const canonicalCurrent = standardizeClubName(currentClub.name);
+    const canonicalCurrent = standardizeClubName(activeClub.name);
     const isUnderdog = !isMajorOrModerate(canonicalCurrent);
 
     let rarity = calculateSlidingScalePoints(totalCurrentClubApps);
     if (isUnderdog) rarity += 75; 
     
-    const newChain = [
-      ...chain, 
-      { player: routingPlayer, fromClub: currentClub, toClub: nextClub, rarity, appearances: totalCurrentClubApps, anchorEra, isUnderdog }
-    ];
+    const newChain = [...activeChain, { player: routingPlayer, fromClub: activeClub, toClub: nextClub, rarity, appearances: totalCurrentClubApps, anchorEra: activeEra, isUnderdog }];
+    setActiveChain(newChain);
     
-    setChain(newChain);
-    
-    if (checkClubMatch(nextClub.name, targetClub.name)) {
-      setCurrentClub(nextClub);
-      setMessage("");
-      setGameState("WON");
-      const finalScore = newChain.reduce((sum, link) => sum + link.rarity, 0) * Math.max(1, newChain.length);
-      updateStats(true, finalScore, newChain.length); 
-      setTimeout(() => setShowStats(true), 1500); 
+    if (gameMode === "MULTIPLAYER") {
+        setUsedPlayerIds(prev => [...prev, String(routingPlayer.id)]);
+    }
+
+    const reachedTarget = checkClubMatch(nextClub.name, targetClub.name);
+    const isBust = (newChain.length + activeFailed >= MAX_LINKS) && !reachedTarget;
+
+    if (gameMode === "MULTIPLAYER") {
+        let newP1Status = p1Status;
+        let newP2Status = p2Status;
+
+        if (reachedTarget) {
+            if (currentTurn === 1) newP1Status = "FINISHED";
+            else newP2Status = "FINISHED";
+            setMessage("");
+            setGameState("PLAYING"); // Fixes the missing search bar bug!
+        } else if (isBust) {
+            if (currentTurn === 1) newP1Status = "LOST";
+            else newP2Status = "LOST";
+            setActiveEra(generateEraConstraint(nextClub.name));
+            setGameState("PLAYING"); // Fixes the missing search bar bug!
+        } else {
+            setActiveEra(generateEraConstraint(nextClub.name));
+            setGameState("PLAYING");
+        }
+
+        if (currentTurn === 1) setP1Status(newP1Status);
+        else setP2Status(newP2Status);
+
+        checkPvPMatchEnd(newP1Status, newP2Status, newChain);
+
     } else {
-      setCurrentClub(nextClub);
-      setAnchorEra(generateEraConstraint(nextClub.name)); 
-      setGameState("PLAYING");
-      checkLossCondition();
+        // Solo Mode Logic
+        if (reachedTarget) {
+          setMessage("");
+          setGameState("WON");
+          const finalScore = newChain.reduce((sum, link) => sum + link.rarity, 0) * Math.max(1, newChain.length);
+          updateStats(true, finalScore, newChain.length); 
+          setTimeout(() => setShowStats(true), 1500); 
+        } else if (isBust) {
+          setGameState("LOST");
+          updateStats(false, 0, 0);
+          setTimeout(() => setShowStats(true), 1500);
+        } else {
+          setAnchorEra(generateEraConstraint(nextClub.name)); 
+          setGameState("PLAYING");
+        }
     }
     
     setRoutingPlayer(null);
     setMessage("");
   };
 
-  const checkLossCondition = () => {
-    if (chain.length + failedAttempts + 1 >= MAX_LINKS && gameState !== "WON") {
-      setGameState("LOST");
-      setMessage("");
-      updateStats(false, 0, 0); 
-      setTimeout(() => setShowStats(true), 1500); 
-    }
-  };
-
-  const calculateScore = () => {
-    const baseScore = chain.reduce((sum, link) => sum + link.rarity, 0);
-    const multiplier = chain.length; 
-    return baseScore * Math.max(1, multiplier);
-  };
-
   const handleShare = () => {
-    const score = calculateScore();
-    const grid = Array(MAX_LINKS).fill("⬛").map((_, i) => i < chain.length ? "🟩" : "⬛").join("");
+    const targetChain = gameMode === "MULTIPLAYER" ? (multiplayerWinner === player1Name ? chain1 : chain2) : chain;
+    const score = getLiveScore(targetChain);
+    const grid = Array(MAX_LINKS).fill("⬛").map((_, i) => i < targetChain.length ? "🟩" : "⬛").join("");
     
     let header = "";
-    if (gameMode === "DAILY") header = `The Pipeline #${currentDay}`;
+    if (gameMode === "MULTIPLAYER") header = `⚔️ The Pipeline: ${player1Name} vs ${player2Name} ⚔️\n🏆 ${multiplayerWinner === 'Tie' ? 'Draw' : multiplayerWinner + ' Won'}!`;
+    else if (gameMode === "DAILY") header = `The Pipeline #${currentDay}`;
     else if (gameMode === "HARD_DAILY") header = `The Pipeline [HARDCORE] #${currentDay} 🩸`;
     else header = `The Pipeline (Unlimited Mode)`;
 
     const currentUrl = 'www.the-pipeline-beta.vercel.app';
-
-    const text = `${header}\n⚽ ${startClub.name} ➡️ ${targetClub.name}\n\nScore: ${score} 📈\n${grid}\n\nPlay: ${currentUrl}`;
+    const text = `${header}\n⚽ ${startClub.name} ➡️ ${targetClub.name}\n${gameMode !== "MULTIPLAYER" ? `Score: ${score} 📈\n` : ''}${grid}\n\nPlay: ${currentUrl}`;
     navigator.clipboard.writeText(text);
     alert("Copied to clipboard!");
   };
 
-  const totalMovesUsed = chain.length + failedAttempts;
+  const totalMovesUsed = activeChain.length + activeFailed;
   const winPercentage = stats.played > 0 ? Math.round((stats.won / stats.played) * 100) : 0;
 
-  // Render defensive empty load wrapper if puzzle calculations are syncing
-  if (!startClub.name) {
+  const CompactLink = ({ link }: { link: ChainLink }) => {
+    const isToUnderdog = !isMajorOrModerate(link.toClub.name);
+    return (
+      <div className="w-full bg-white/[0.05] backdrop-blur-sm border border-white/10 p-2 md:p-3 rounded-xl flex flex-col items-center text-center shadow-lg relative">
+         {link.player.imageUrl ? (
+            <img src={link.player.imageUrl} alt="" className="w-8 h-8 rounded-full object-cover bg-slate-800 mb-1.5 shadow-md" />
+         ) : (
+            <span className="text-2xl mb-1">{getFlag(link.player.nationality)}</span>
+         )}
+         <span className="font-bold text-white text-[11px] md:text-xs leading-tight line-clamp-1">{link.player.name}</span>
+         <span className="text-[9px] text-slate-400 font-bold uppercase mt-1 tracking-wider">
+            {link.appearances} Apps • [{link.anchorEra.display}]
+         </span>
+         
+         <div className="h-4 w-[1px] bg-slate-600 my-1.5"></div>
+         
+         <div className={`px-2 py-1.5 w-full rounded-md text-[10px] md:text-xs font-bold shadow-inner bg-gradient-to-br ${getClubStyle(link.toClub.name)} border-white/20 border relative`}>
+            <span className="line-clamp-1">{link.toClub.name}</span>
+            {isToUnderdog && (
+               <span className="absolute -top-3 right-0 bg-amber-500 text-slate-900 text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-widest shadow-md border border-amber-600">
+                 Underdog
+               </span>
+            )}
+         </div>
+      </div>
+    );
+  };
+
+  if (!startClub.name && !showMultiplayerSetup) {
     return (
       <main className="min-h-screen bg-[#0B0F19] text-white flex items-center justify-center font-sans">
         <div className="text-center">
@@ -792,25 +1018,63 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-[#0B0F19] text-white flex flex-col items-center py-8 px-4 font-sans selection:bg-emerald-500/30">
+    <main className="min-h-screen bg-[#0B0F19] text-white flex flex-col items-center py-8 px-4 font-sans tracking-tight selection:bg-emerald-500/30">
       
+      {/* MULTIPLAYER SETUP MODAL */}
+      {showMultiplayerSetup && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/95 backdrop-blur-md p-4 animate-in fade-in duration-200">
+          <div className="bg-[#111827] border border-indigo-500/30 p-6 md:p-8 rounded-2xl max-w-sm w-full shadow-[0_0_40px_rgba(99,102,241,0.15)] relative font-sans">
+            <button 
+              onClick={() => {
+                 setShowMultiplayerSetup(false);
+                 if (gameMode === "MULTIPLAYER") startDailyMode(); // Fallback
+              }}
+              className="absolute top-5 right-5 text-slate-500 hover:text-white bg-slate-800/50 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center transition-all"
+            >✕</button>
+            <h2 className="text-xl font-black text-white mb-6 uppercase flex items-center gap-3">
+               <span className="text-indigo-500 text-2xl">⚔️</span> Multiplayer Race
+            </h2>
+            
+            <div className="flex justify-between items-center bg-white/5 border border-white/10 px-4 py-2 rounded-lg mb-4">
+               <span className="text-xs text-slate-300 font-bold uppercase tracking-widest">Series Score: <span className="text-indigo-400">{pvpScores.p1}</span> - <span className="text-rose-400">{pvpScores.p2}</span></span>
+               <button 
+                  onClick={() => setPvpScores({p1: 0, p2: 0})} 
+                  className="text-[9px] uppercase font-black text-red-400 hover:text-red-300 px-2 py-1 bg-red-500/10 rounded border border-red-500/30"
+               >
+                  Reset
+               </button>
+            </div>
+
+            <p className="text-xs text-slate-400 mb-6 leading-relaxed">
+               Pass the device. Both players build distinct pipelines side-by-side. <strong>If one player uses a footballer, the other cannot.</strong> Guess a wrong or duplicate player, and you lose your turn. Highest score at the target wins.
+            </p>
+            <div className="flex flex-col gap-4 mb-8">
+               <div>
+                  <label className="text-[10px] font-black text-indigo-400 uppercase tracking-widest">Player 1 Name</label>
+                  <input value={player1Name} onChange={e => setPlayer1Name(e.target.value)} className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 rounded-xl focus:border-indigo-500 outline-none mt-1 shadow-inner transition-all" maxLength={15} />
+               </div>
+               <div>
+                  <label className="text-[10px] font-black text-rose-400 uppercase tracking-widest">Player 2 Name</label>
+                  <input value={player2Name} onChange={e => setPlayer2Name(e.target.value)} className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 rounded-xl focus:border-rose-500 outline-none mt-1 shadow-inner transition-all" maxLength={15} />
+               </div>
+            </div>
+            <button onClick={startMultiplayerMode} className="w-full bg-gradient-to-r from-indigo-500 to-rose-500 hover:opacity-90 text-white font-black py-4 rounded-xl shadow-lg transition-transform active:scale-95 uppercase tracking-widest">
+               Start Race
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* STATS MODAL */}
       {showStats && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-[#111827] border border-slate-800 p-6 md:p-8 rounded-2xl max-w-sm w-full shadow-2xl relative font-sans">
-            <button 
-              onClick={() => setShowStats(false)}
-              className="absolute top-5 right-5 text-slate-500 hover:text-white bg-slate-800/50 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center transition-all"
-            >
-              ✕
-            </button>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200" onClick={() => setShowStats(false)}>
+          <div className="bg-[#111827] border border-slate-800 p-6 md:p-8 rounded-2xl max-w-sm w-full shadow-2xl relative font-sans flex flex-col max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+            <div className="flex justify-between items-center mb-6 shrink-0">
+               <h2 className="text-xl md:text-2xl font-black text-white tracking-widest uppercase flex items-center gap-3"><span className="w-2 h-6 bg-cyan-500 rounded-full"></span> Statistics</h2>
+               <button onClick={() => setShowStats(false)} className="text-slate-500 hover:text-white bg-slate-800/50 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center transition-all">✕</button>
+            </div>
             
-            <h2 className="text-xl md:text-2xl font-black text-white mb-6 tracking-widest uppercase flex items-center gap-3">
-              <span className="w-2 h-6 bg-cyan-500 rounded-full"></span>
-              Statistics
-            </h2>
-
-            <div className="grid grid-cols-4 gap-2 text-center mb-6">
+            <div className="grid grid-cols-4 gap-2 text-center mb-6 shrink-0">
               <div className="flex flex-col">
                 <span className="text-3xl font-black text-white">{stats.played}</span>
                 <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider mt-1">Played</span>
@@ -829,9 +1093,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* PAST 7 GAMES HISTORY */}
             {stats.history && stats.history.length > 0 && (
-              <div className="mb-6">
+              <div className="mb-6 overflow-y-auto pr-2">
                 <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 border-b border-slate-800 pb-2">Last 7 Games</h3>
                 <div className="space-y-2">
                   {stats.history.map((h, i) => {
@@ -841,10 +1104,7 @@ export default function Home() {
                       <div key={i} className="flex items-center text-xs">
                         <div className="w-12 text-slate-400 font-bold">Day {h.day}</div>
                         <div className="flex-1 ml-2">
-                          <div 
-                            className={`h-5 flex items-center px-2 rounded-sm ${h.won ? 'bg-emerald-500 text-slate-900 font-black' : 'bg-red-500/20 text-red-400 font-bold'}`}
-                            style={{ width: `${widthPercent}%` }}
-                          >
+                          <div className={`h-5 flex items-center px-2 rounded-sm ${h.won ? 'bg-emerald-500 text-slate-900 font-black' : 'bg-red-500/20 text-red-400 font-bold'}`} style={{ width: `${widthPercent}%` }}>
                             {h.won ? h.score : 'FAILED'}
                           </div>
                         </div>
@@ -854,54 +1114,44 @@ export default function Home() {
                 </div>
               </div>
             )}
-
-            {gameState === "WON" && (
-              <button 
-                onClick={() => {
-                  handleShare();
-                  setShowStats(false);
-                }}
-                className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm md:text-base py-4 rounded-xl transition-all active:scale-[0.98] uppercase tracking-widest mb-3 shadow-[0_0_20px_rgba(52,211,153,0.2)]"
-              >
-                Share Results
-              </button>
-            )}
-
-            <button 
-              onClick={() => setShowStats(false)}
-              className="w-full bg-white/5 hover:bg-white/10 text-white font-bold text-sm py-4 rounded-xl transition-all border border-white/10"
-            >
-              Close
-            </button>
+            
+            <div className="pt-2 shrink-0 border-t border-slate-800 mt-auto">
+               {gameState === "WON" && (
+                 <button onClick={() => { handleShare(); setShowStats(false); }} className="w-full bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-slate-950 font-black text-sm md:text-base py-4 rounded-xl transition-all active:scale-[0.98] uppercase tracking-widest mb-3 shadow-[0_0_20px_rgba(52,211,153,0.2)] mt-4">
+                   Share Results
+                 </button>
+               )}
+               <button onClick={() => setShowStats(false)} className={`w-full bg-white/5 hover:bg-white/10 text-white font-bold text-sm py-4 rounded-xl transition-all border border-white/10 ${gameState !== "WON" && 'mt-4'}`}>Close</button>
+            </div>
           </div>
         </div>
       )}
 
-      {/* RULES MODAL */}
+      {/* RULES MODAL - FIXED */}
       {showRules && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-[#111827] border border-slate-800 p-6 md:p-8 rounded-2xl max-w-xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto font-sans">
+        <div 
+           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+           onClick={closeRules}
+        >
+          <div 
+             className="bg-[#111827] border border-slate-800 rounded-2xl max-w-xl w-full shadow-2xl relative flex flex-col max-h-[90vh] font-sans overflow-hidden"
+             onClick={(e) => e.stopPropagation()}
+          >
+            {/* Sticky Header */}
+            <div className="flex justify-between items-center p-6 border-b border-slate-800 shrink-0 bg-[#111827] z-10">
+               <h2 className="text-xl md:text-2xl font-black text-white tracking-widest uppercase flex items-center gap-3">
+                 <span className="w-2 h-6 bg-emerald-500 rounded-full"></span>How to Play
+               </h2>
+               <button onClick={closeRules} className="text-slate-500 hover:text-white bg-slate-800/50 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center transition-all">✕</button>
+            </div>
             
-            <button 
-              onClick={() => setShowRules(false)}
-              className="absolute top-5 right-5 text-slate-500 hover:text-white bg-slate-800/50 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center transition-all"
-            >
-              ✕
-            </button>
-            
-            <h2 className="text-xl md:text-2xl font-black text-white mb-6 tracking-widest uppercase flex items-center gap-3">
-              <span className="w-2 h-6 bg-emerald-500 rounded-full"></span>
-              How to Play
-            </h2>
-            
-            <div className="space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
-              
+            {/* Scrollable Body */}
+            <div className="p-6 space-y-6 text-slate-300 text-sm md:text-base leading-relaxed overflow-y-auto">
               <div className="grid gap-4">
                 <div className="bg-white/5 border border-white/5 p-4 rounded-xl">
                   <h3 className="font-bold text-white mb-1 uppercase tracking-wider text-xs text-emerald-400">The Objective</h3>
                   <p>Connect the starting club to the target club by linking players who share a career history. You have a maximum of <strong className="text-red-400">{MAX_LINKS} moves</strong>.</p>
                 </div>
-
                 <div className="bg-white/5 border border-white/5 p-4 rounded-xl">
                   <h3 className="font-bold text-white mb-1 uppercase tracking-wider text-xs text-amber-400">Dynamic Era Constraints</h3>
                   <p>The game adjusts difficulty based on club prestige:</p>
@@ -912,90 +1162,45 @@ export default function Home() {
                   </ul>
                 </div>
               </div>
-
               <div className="pt-2">
                 <h3 className="font-bold text-white mb-3 uppercase tracking-wider text-xs text-cyan-400 border-b border-white/10 pb-2">Scoring System</h3>
                 <div className="grid grid-cols-2 gap-3 text-xs md:text-sm">
-                  <div className="bg-[#0f141e] border border-slate-800 p-3 rounded-lg flex flex-col justify-between">
-                    <span className="text-slate-400 mb-1">1 - 5 Appearances</span>
-                    <span className="font-black text-white text-lg">150 pts</span>
-                  </div>
-                  <div className="bg-[#0f141e] border border-slate-800 p-3 rounded-lg flex flex-col justify-between">
-                    <span className="text-slate-400 mb-1">6 - 15 Appearances</span>
-                    <span className="font-black text-white text-lg">139 - 117 pts</span>
-                  </div>
-                  <div className="bg-[#0f141e] border border-slate-800 p-3 rounded-lg flex flex-col justify-between">
-                    <span className="text-slate-400 mb-1">20 - 39 Appearances</span>
-                    <span className="font-black text-white text-lg">110 - 80 pts</span>
-                  </div>
-                  <div className="bg-[#0f141e] border border-slate-800 p-3 rounded-lg flex flex-col justify-between">
-                    <span className="text-slate-400 mb-1">100+ Apps (Legends)</span>
-                    <span className="font-black text-white text-lg">15 pts</span>
-                  </div>
+                  <div className="bg-[#0f141e] border border-slate-800 p-3 rounded-lg flex flex-col justify-between"><span className="text-slate-400 mb-1">1 - 5 Appearances</span><span className="font-black text-white text-lg">150 pts</span></div>
+                  <div className="bg-[#0f141e] border border-slate-800 p-3 rounded-lg flex flex-col justify-between"><span className="text-slate-400 mb-1">6 - 15 Appearances</span><span className="font-black text-white text-lg">139 - 117 pts</span></div>
+                  <div className="bg-[#0f141e] border border-slate-800 p-3 rounded-lg flex flex-col justify-between"><span className="text-slate-400 mb-1">20 - 39 Appearances</span><span className="font-black text-white text-lg">110 - 80 pts</span></div>
+                  <div className="bg-[#0f141e] border border-slate-800 p-3 rounded-lg flex flex-col justify-between"><span className="text-slate-400 mb-1">100+ Apps (Legends)</span><span className="font-black text-white text-lg">15 pts</span></div>
                 </div>
               </div>
-
               <div className="bg-gradient-to-r from-amber-500/10 to-transparent border-l-4 border-amber-500 p-4 rounded-r-xl">
-                <h3 className="font-black text-amber-400 mb-1 uppercase tracking-wide text-sm flex items-center gap-2">
-                  🔥 The Underdog Bonus
-                </h3>
-                <p className="text-xs text-slate-300">
-                  Step off the beaten path. If you successfully name a player from a <strong>Minor League Club</strong> (outside the Major & Moderate tiers), you will earn an instant <strong className="text-amber-400">+75 Point</strong> jackpot.
-                </p>
+                <h3 className="font-black text-amber-400 mb-1 uppercase tracking-wide text-sm flex items-center gap-2">🔥 The Underdog Bonus</h3>
+                <p className="text-xs text-slate-300">Step off the beaten path. If you successfully name a player from a <strong>Minor League Club</strong> (outside the Major & Moderate tiers), you will earn an instant <strong className="text-amber-400">+75 Point</strong> jackpot.</p>
               </div>
-
             </div>
-
-            <button 
-              onClick={() => setShowRules(false)}
-              className="mt-8 w-full bg-white hover:bg-slate-200 text-slate-950 font-black text-sm md:text-base py-4 rounded-xl transition-all active:scale-[0.98] uppercase tracking-widest"
-            >
-              Enter The Pipeline
-            </button>
+            
+            {/* Sticky Footer */}
+            <div className="p-6 shrink-0 border-t border-slate-800 bg-[#111827] z-10 mt-auto">
+               <button onClick={closeRules} className="w-full bg-white hover:bg-slate-200 text-slate-950 font-black text-sm md:text-base py-4 rounded-xl transition-all active:scale-[0.98] uppercase tracking-widest shadow-lg">Enter The Pipeline</button>
+            </div>
           </div>
         </div>
       )}
 
-      <div className="text-center mb-8 w-full max-w-md relative">
-        <div className="absolute right-0 top-2 flex gap-2">
-          <button 
-            onClick={() => setShowStats(true)}
-            className="text-slate-400 hover:text-white border border-slate-700 w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-colors bg-white/5"
-            title="Statistics"
-          >
-            📊
-          </button>
-          <button 
-            onClick={() => setShowRules(true)}
-            className="text-slate-400 hover:text-white border border-slate-700 px-3 py-1 rounded-lg text-sm font-bold transition-colors bg-white/5"
-          >
-            Rules
-          </button>
+      {/* HEADER & CONTROLS */}
+      <div className="text-center mb-8 w-full max-w-3xl relative px-2">
+        <div className="absolute right-2 top-2 flex gap-2">
+          <button onClick={() => setShowStats(true)} className="text-slate-400 hover:text-white border border-slate-700 w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-colors bg-white/5" title="Statistics">📊</button>
+          <button onClick={() => setShowRules(true)} className="text-slate-400 hover:text-white border border-slate-700 px-3 py-1 rounded-lg text-sm font-bold transition-colors bg-white/5">Rules</button>
         </div>
 
         <h1 className="text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 tracking-tighter mb-4 mt-8">
           THE PIPELINE
         </h1>
         
-        <div className="flex bg-white/5 rounded-xl p-1 mb-2 border border-white/10 gap-1">
-          <button 
-            onClick={startDailyMode}
-            className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-lg transition-all ${gameMode === "DAILY" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shadow-md" : "text-slate-400 hover:text-slate-200"}`}
-          >
-            Daily
-          </button>
-          <button 
-            onClick={startHardDailyMode}
-            className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-lg transition-all ${gameMode === "HARD_DAILY" ? "bg-red-500/20 text-red-400 border border-red-500/30 shadow-md" : "text-slate-400 hover:text-slate-200"}`}
-          >
-            Hardcore
-          </button>
-          <button 
-            onClick={startUnlimitedMode}
-            className={`flex-1 py-2 text-xs sm:text-sm font-bold rounded-lg transition-all ${gameMode === "UNLIMITED" ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 shadow-md" : "text-slate-400 hover:text-slate-200"}`}
-          >
-            Unlimited
-          </button>
+        <div className="flex bg-white/5 rounded-xl p-1 mb-2 border border-white/10 gap-1 w-full max-w-sm mx-auto">
+          <button onClick={startDailyMode} className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${gameMode === "DAILY" ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 shadow-md" : "text-slate-400 hover:text-slate-200"}`}>Daily</button>
+          <button onClick={startHardDailyMode} className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${gameMode === "HARD_DAILY" ? "bg-red-500/20 text-red-400 border border-red-500/30 shadow-md" : "text-slate-400 hover:text-slate-200"}`}>Hardcore</button>
+          <button onClick={startUnlimitedMode} className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${gameMode === "UNLIMITED" ? "bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 shadow-md" : "text-slate-400 hover:text-slate-200"}`}>Unlimited</button>
+          <button onClick={() => setShowMultiplayerSetup(true)} className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${gameMode === "MULTIPLAYER" ? "bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 shadow-md" : "text-slate-400 hover:text-slate-200"}`}>Multiplayer</button>
         </div>
 
         <div className="flex gap-2 justify-center items-center h-8">
@@ -1003,105 +1208,230 @@ export default function Home() {
             <span>
               {gameMode === "DAILY" ? `Puzzle #${currentDay}` : 
                gameMode === "HARD_DAILY" ? `Hardcore #${currentDay}` : 
-               "Unlimited"}
+               gameMode === "MULTIPLAYER" ? `Multiplayer Race` : "Unlimited"}
             </span>
             <span className="w-1 h-1 rounded-full bg-slate-600"></span>
             <span className={`${totalMovesUsed >= MAX_LINKS - 1 ? 'text-red-400' : 'text-emerald-400'}`}>
               Links: {totalMovesUsed}/{MAX_LINKS}
             </span>
+            {gameMode !== "MULTIPLAYER" && (
+                <>
+                  <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+                  <span className="text-amber-400 font-black">Score: {getLiveScore(chain)}</span>
+                </>
+            )}
           </div>
           
-          {gameMode === "UNLIMITED" && gameState === "PLAYING" && (
+          {(gameMode === "UNLIMITED" || gameMode === "MULTIPLAYER") && gameState === "PLAYING" && (
             <button 
-              onClick={startUnlimitedMode}
+              onClick={gameMode === "MULTIPLAYER" ? () => setShowMultiplayerSetup(true) : startUnlimitedMode}
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 transition-all active:scale-95 shadow-sm"
               title="Generate New Match"
-            >
-              🔀 Randomise
-            </button>
+            >🔀 Randomise</button>
           )}
         </div>
       </div>
 
-      <div className="w-full max-w-md relative">
-        <div className="flex justify-between items-center mb-10 px-2">
-          <div className={`w-28 h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(startClub.name)} border-2`}>
-            {startClub.name}
-          </div>
-          <div className="flex-1 flex items-center justify-center px-4 opacity-50">
-            <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-slate-500 to-transparent"></div>
-          </div>
-          <div className={`w-28 h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(targetClub.name)} border-2`}>
-            {targetClub.name}
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-3 mb-8">
-          {chain.map((link, idx) => (
-            <div key={idx} className="animate-in slide-in-from-top-4 fade-in duration-500 flex flex-col items-center">
-              <div className="w-full bg-white/[0.03] backdrop-blur-md border border-white/10 p-4 rounded-2xl flex justify-between items-center shadow-lg">
-                <div className="flex items-center gap-3">
-                  {link.player.imageUrl ? (
-                    <img src={link.player.imageUrl} alt="" className="w-8 h-8 rounded-full object-cover bg-slate-800" />
-                  ) : (
-                    <span className="text-2xl">{getFlag(link.player.nationality)}</span>
-                  )}
-                  
-                  <div className="flex flex-col">
-                    <span className="font-bold text-slate-100 leading-tight">{link.player.name}</span>
-                    <span className="text-[10px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider flex items-center gap-1.5">
-                      <span>⚽ {link.appearances} {link.appearances === 1 ? 'App' : 'Apps'} for {link.fromClub.name}</span>
-                      <span className="w-1 h-1 rounded-full bg-slate-600"></span>
-                      <span className="text-emerald-500">[{link.anchorEra.display}]</span>
-                    </span>
+      <div className="w-full max-w-3xl relative px-2 flex flex-col items-center">
+        
+        {/* ========================================================= */}
+        {/* MULTIPLAYER PARALLEL SPLIT BOARD UI */}
+        {/* ========================================================= */}
+        {gameMode === "MULTIPLAYER" ? (
+          <div className="w-full flex flex-col items-center">
+            
+            {/* LIVE SCOREBOARD & TURN INDICATOR */}
+            <div className="w-full mb-6 max-w-lg">
+              <div className="flex justify-center items-center gap-4 mb-4">
+                 <div className={`flex-1 flex flex-col items-center bg-indigo-500/10 border border-indigo-500/30 px-4 py-2 rounded-xl transition-all ${currentTurn === 1 && p1Status === "PLAYING" ? 'ring-2 ring-indigo-500/50 shadow-[0_0_15px_rgba(99,102,241,0.2)]' : 'opacity-70'}`}>
+                    <span className="text-[10px] md:text-xs font-black text-indigo-400 uppercase tracking-widest line-clamp-1">{player1Name}</span>
+                    <span className="text-2xl md:text-3xl font-black text-white">{getLiveScore(chain1)}</span>
+                 </div>
+                 <div className="text-slate-600 font-black text-sm md:text-base">VS</div>
+                 <div className={`flex-1 flex flex-col items-center bg-rose-500/10 border border-rose-500/30 px-4 py-2 rounded-xl transition-all ${currentTurn === 2 && p2Status === "PLAYING" ? 'ring-2 ring-rose-500/50 shadow-[0_0_15px_rgba(244,63,94,0.2)]' : 'opacity-70'}`}>
+                    <span className="text-[10px] md:text-xs font-black text-rose-400 uppercase tracking-widest line-clamp-1">{player2Name}</span>
+                    <span className="text-2xl md:text-3xl font-black text-white">{getLiveScore(chain2)}</span>
+                 </div>
+              </div>
+              
+              {gameState === "PLAYING" && (
+                  <div className={`w-full py-2.5 rounded-lg text-center font-black uppercase tracking-widest text-xs md:text-sm shadow-md border transition-all duration-300 ${currentTurn === 1 ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/50' : 'bg-rose-500/20 text-rose-400 border-rose-500/50'}`}>
+                      {currentTurn === 1 ? player1Name : player2Name}&apos;s Turn
                   </div>
-                </div>
-                
-                <div className="flex flex-col items-end gap-1.5">
-                  <span className="text-xs font-black text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-lg">
-                    +{link.rarity} pts
-                  </span>
+              )}
+            </div>
+
+            {/* START TO TARGET GRAPHIC */}
+            <div className="flex justify-between items-center mb-8 px-4 w-full max-w-lg mx-auto">
+              <div className="flex flex-col items-center">
+                <span className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Start Here</span>
+                <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(startClub.name)} border border-white/20`}>
+                  <span className="text-sm md:text-base leading-tight drop-shadow-md">{startClub.name}</span>
                 </div>
               </div>
               
-              <div className="h-6 w-[2px] bg-emerald-500/50 my-1"></div>
+              <div className="flex-1 flex flex-col items-center justify-center px-2 mt-6">
+                <span className="text-[9px] md:text-[10px] uppercase tracking-widest font-black mb-2 text-slate-400 text-center">Link Players To</span>
+                <div className="w-full flex items-center">
+                  <div className="h-[2px] w-full bg-gradient-to-r from-emerald-500/10 via-emerald-500/80 to-emerald-500"></div>
+                  <div className="w-0 h-0 border-y-[5px] border-y-transparent border-l-[6px] border-l-emerald-500"></div>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <span className="text-[10px] text-cyan-400 font-black uppercase tracking-widest mb-2">Target</span>
+                <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(targetClub.name)} border border-white/20`}>
+                  <span className="text-sm md:text-base leading-tight drop-shadow-md">{targetClub.name}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* SPLIT COLUMNS */}
+            <div className="grid grid-cols-2 gap-3 md:gap-6 w-full relative mb-8 items-start">
               
-              <div className={`px-4 py-1.5 rounded-full text-sm font-bold shadow-md bg-gradient-to-br ${getClubStyle(link.toClub.name)} border flex items-center gap-2`}>
-                <span>{link.toClub.name}</span>
-                {link.isUnderdog && (
-                  <span className="text-[9px] font-black text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-widest">
-                    Underdog
-                  </span>
+              {/* Player 1 Column */}
+              <div className={`flex flex-col gap-3 items-center p-2 md:p-3 rounded-2xl border-2 transition-all duration-300 ${currentTurn === 1 && p1Status === "PLAYING" ? 'border-indigo-500 bg-indigo-500/10 shadow-[0_0_20px_rgba(99,102,241,0.2)]' : 'border-white/5 bg-white/[0.02]'}`}>
+                <div className="text-[10px] md:text-sm font-black text-indigo-400 uppercase tracking-widest bg-indigo-500/20 px-3 py-1 rounded-full mb-1 line-clamp-1">
+                    {player1Name}
+                </div>
+                {p1Status === "FINISHED" && <div className="text-emerald-400 font-black text-[10px] md:text-xs uppercase bg-emerald-500/20 px-2 py-1 rounded">Finished: {getLiveScore(chain1)} pts</div>}
+                {p1Status === "LOST" && <div className="text-rose-400 font-black text-[10px] md:text-xs uppercase bg-rose-500/20 px-2 py-1 rounded">Busted</div>}
+
+                {chain1.map((link, idx) => <CompactLink key={idx} link={link} />)}
+                
+                {p1Status === "PLAYING" && (
+                    <div className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center text-center p-1.5 font-bold shadow-lg bg-gradient-to-br ${getClubStyle(derivedClub1.name)} border-2 mt-2 ${currentTurn === 1 ? 'animate-pulse ring-2 ring-indigo-500 ring-offset-4 ring-offset-[#0B0F19]' : 'opacity-50 grayscale-[30%]'}`}>
+                        <span className="text-[9px] md:text-sm leading-tight">{derivedClub1.name}</span>
+                    </div>
                 )}
               </div>
-              
-              {idx !== chain.length - 1 && <div className="h-6 w-[2px] bg-slate-700 my-1"></div>}
-            </div>
-          ))}
-        </div>
 
-        <div className="text-center min-h-[3rem] mb-4 flex items-center justify-center text-sm font-bold text-red-400 max-w-sm mx-auto leading-snug px-2">
+              {/* Player 2 Column */}
+              <div className={`flex flex-col gap-3 items-center p-2 md:p-3 rounded-2xl border-2 transition-all duration-300 ${currentTurn === 2 && p2Status === "PLAYING" ? 'border-rose-500 bg-rose-500/10 shadow-[0_0_20px_rgba(244,63,94,0.2)]' : 'border-white/5 bg-white/[0.02]'}`}>
+                <div className="text-[10px] md:text-sm font-black text-rose-400 uppercase tracking-widest bg-rose-500/20 px-3 py-1 rounded-full mb-1 line-clamp-1">
+                    {player2Name}
+                </div>
+                {p2Status === "FINISHED" && <div className="text-emerald-400 font-black text-[10px] md:text-xs uppercase bg-emerald-500/20 px-2 py-1 rounded">Finished: {getLiveScore(chain2)} pts</div>}
+                {p2Status === "LOST" && <div className="text-rose-400 font-black text-[10px] md:text-xs uppercase bg-rose-500/20 px-2 py-1 rounded">Busted</div>}
+
+                {chain2.map((link, idx) => <CompactLink key={idx} link={link} />)}
+                
+                {p2Status === "PLAYING" && (
+                    <div className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl flex items-center justify-center text-center p-1.5 font-bold shadow-lg bg-gradient-to-br ${getClubStyle(derivedClub2.name)} border-2 mt-2 ${currentTurn === 2 ? 'animate-pulse ring-2 ring-rose-500 ring-offset-4 ring-offset-[#0B0F19]' : 'opacity-50 grayscale-[30%]'}`}>
+                        <span className="text-[9px] md:text-sm leading-tight">{derivedClub2.name}</span>
+                    </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* ========================================================= */
+          /* STANDARD SOLO BOARD UI */
+          /* ========================================================= */
+          <div className="w-full max-w-md flex flex-col items-center">
+            
+            {/* START TO TARGET GRAPHIC */}
+            <div className="flex justify-between items-center mb-10 px-4 w-full max-w-lg mx-auto">
+              <div className="flex flex-col items-center">
+                <span className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Start Here</span>
+                <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(startClub.name)} border border-white/20`}>
+                  <span className="text-sm md:text-base leading-tight drop-shadow-md">{startClub.name}</span>
+                </div>
+              </div>
+              
+              <div className="flex-1 flex flex-col items-center justify-center px-2 mt-6">
+                <span className="text-[9px] md:text-[10px] uppercase tracking-widest font-black mb-2 text-slate-400 text-center">Link Players To</span>
+                <div className="w-full flex items-center">
+                  <div className="h-[2px] w-full bg-gradient-to-r from-emerald-500/10 via-emerald-500/80 to-emerald-500"></div>
+                  <div className="w-0 h-0 border-y-[5px] border-y-transparent border-l-[6px] border-l-emerald-500"></div>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <span className="text-[10px] text-cyan-400 font-black uppercase tracking-widest mb-2">Target</span>
+                <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(targetClub.name)} border border-white/20`}>
+                  <span className="text-sm md:text-base leading-tight drop-shadow-md">{targetClub.name}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3 mb-8 w-full">
+              {chain.map((link, idx) => {
+                const isToUnderdog = !isMajorOrModerate(link.toClub.name);
+                return (
+                  <div key={idx} className="animate-in slide-in-from-top-4 fade-in duration-500 flex flex-col items-center w-full">
+                    <div className="w-full bg-white/[0.03] backdrop-blur-md border border-white/10 p-4 rounded-2xl flex justify-between items-center shadow-lg">
+                      <div className="flex items-center gap-3">
+                        {link.player.imageUrl ? (
+                          <img src={link.player.imageUrl} alt="" className="w-8 h-8 rounded-full object-cover bg-slate-800" />
+                        ) : (
+                          <span className="text-2xl">{getFlag(link.player.nationality)}</span>
+                        )}
+                        
+                        <div className="flex flex-col">
+                          <span className="font-bold text-slate-100 leading-tight">{link.player.name}</span>
+                          <span className="text-[10px] text-slate-400 font-bold uppercase mt-0.5 tracking-wider flex items-center gap-1.5">
+                            <span>⚽ {link.appearances} {link.appearances === 1 ? 'App' : 'Apps'} for {link.fromClub.name}</span>
+                            <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+                            <span className="text-emerald-500">[{link.anchorEra.display}]</span>
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col items-end gap-1.5">
+                        <span className="text-xs font-black text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-lg">
+                          +{link.rarity} pts
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="h-6 w-[2px] bg-emerald-500/50 my-1"></div>
+                    
+                    <div className={`px-4 py-1.5 w-full max-w-[200px] text-center rounded-xl text-sm font-bold shadow-md bg-gradient-to-br ${getClubStyle(link.toClub.name)} border border-white/20 flex flex-col items-center relative`}>
+                      <span className="py-1 line-clamp-1">{link.toClub.name}</span>
+                      {isToUnderdog && (
+                        <span className="absolute -top-3 right-0 bg-amber-500 text-slate-900 text-[8px] font-black px-1.5 py-0.5 rounded uppercase tracking-widest shadow-md border border-amber-600">
+                          Underdog
+                        </span>
+                      )}
+                    </div>
+                    
+                    {idx !== chain.length - 1 && <div className="h-6 w-[2px] bg-slate-700 my-1"></div>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* FEEDBACK MESSAGES */}
+        <div className="text-center min-h-[3rem] my-6 flex items-center justify-center text-sm font-bold text-red-400 max-w-md mx-auto leading-snug px-2">
           {message}
         </div>
 
+        {/* GAME CONTROLS & SEARCH */}
         {gameState === "PLAYING" && (
-          <div className="w-full flex flex-col gap-5">
+          <div className="w-full max-w-md flex flex-col gap-5">
             <div className="flex justify-center animate-in slide-in-from-bottom-2">
-              <div className="bg-emerald-950/80 border border-emerald-500/40 text-emerald-400 font-black px-5 py-2.5 rounded-xl text-sm shadow-[0_0_20px_rgba(52,211,153,0.15)] flex items-center gap-2 backdrop-blur-md uppercase tracking-wide">
-                <span>⏳</span>
-                <span>Must have played in <strong>{anchorEra.display}</strong></span>
+              <div className={`border font-black px-4 py-3 md:px-6 md:py-3 rounded-xl md:rounded-full text-[11px] md:text-sm shadow-lg flex flex-col md:flex-row items-center justify-center text-center gap-1.5 md:gap-2 backdrop-blur-md uppercase tracking-wide transition-colors w-full ${
+                  gameMode === "MULTIPLAYER" 
+                    ? (currentTurn === 1 ? 'bg-indigo-950/80 border-indigo-500/40 text-indigo-400' : 'bg-rose-950/80 border-rose-500/40 text-rose-400')
+                    : 'bg-emerald-950/80 border-emerald-500/40 text-emerald-400'
+              }`}>
+                <span>⚽</span>
+                <span>Choose a player who played for <strong>{activeClub.name}</strong> in <strong>{activeEra.display}</strong></span>
               </div>
             </div>
             
             {isScouting ? (
               <div className="w-full bg-white/5 border border-white/10 py-12 rounded-2xl flex flex-col items-center justify-center relative overflow-hidden shadow-2xl animate-in zoom-in duration-300">
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent animate-[pulse_2s_ease-in-out_infinite] blur-xl"></div>
+                <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent to-transparent animate-[pulse_2s_ease-in-out_infinite] blur-xl ${gameMode === "MULTIPLAYER" ? (currentTurn === 1 ? 'via-indigo-500/10' : 'via-rose-500/10') : 'via-emerald-500/10'}`}></div>
                 
-                <svg className="w-14 h-14 text-emerald-400 animate-bounce relative z-10 drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg className={`w-14 h-14 animate-bounce relative z-10 ${gameMode === "MULTIPLAYER" ? (currentTurn === 1 ? 'text-indigo-400' : 'text-rose-400') : 'text-emerald-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 
-                <p className="mt-5 text-emerald-400 font-black uppercase tracking-widest text-sm relative z-10">
+                <p className={`mt-5 font-black uppercase tracking-widest text-sm relative z-10 ${gameMode === "MULTIPLAYER" ? (currentTurn === 1 ? 'text-indigo-400' : 'text-rose-400') : 'text-emerald-400'}`}>
                   Scanning Archives...
                 </p>
               </div>
@@ -1110,10 +1440,14 @@ export default function Home() {
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-500">🔍</div>
                 <input
                   type="text"
-                  placeholder={`Search players from ${currentClub.name}...`}
+                  placeholder={`Search players from ${activeClub.name}...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 text-white pl-12 pr-4 py-4 rounded-2xl focus:border-emerald-500 focus:bg-white/10 focus:ring-1 focus:ring-emerald-500 transition-all outline-none shadow-2xl placeholder:text-slate-500"
+                  className={`w-full bg-white/5 border border-white/10 text-white pl-12 pr-4 py-4 rounded-2xl focus:bg-white/10 transition-all outline-none shadow-2xl placeholder:text-slate-500 ${
+                      gameMode === "MULTIPLAYER" 
+                          ? (currentTurn === 1 ? 'focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500' : 'focus:border-rose-500 focus:ring-1 focus:ring-rose-500')
+                          : 'focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500'
+                  }`}
                 />
                 {searchResults.length > 0 && (
                   <ul className="absolute z-20 w-full bg-[#151b2b] border border-white/10 rounded-2xl mt-2 shadow-2xl overflow-hidden divide-y divide-white/5 max-h-60 overflow-y-auto">
@@ -1145,8 +1479,9 @@ export default function Home() {
           </div>
         )}
 
+        {/* ROUTING MODAL */}
         {gameState === "ROUTING" && routingPlayer && (
-          <div className="bg-white/5 backdrop-blur-xl p-5 rounded-2xl border border-amber-500/30 animate-in slide-in-from-bottom-4 shadow-2xl mt-4">
+          <div className="w-full max-w-md bg-white/5 backdrop-blur-xl p-5 rounded-2xl border border-amber-500/30 animate-in slide-in-from-bottom-4 shadow-2xl mt-4">
             <p className="mb-4 text-center text-slate-300 text-sm">
               Select destination for <strong className="text-white">{routingPlayer.name}</strong>
             </p>
@@ -1159,12 +1494,12 @@ export default function Home() {
                   <button 
                     key={idx} 
                     onClick={() => handleRouteSelect(club)}
-                    className={`w-full py-3.5 px-4 rounded-xl font-bold flex items-center justify-between transition-transform hover:scale-[1.02] active:scale-95 border-2 shadow-lg bg-gradient-to-br ${getClubStyle(club.name)}`}
+                    className={`w-full py-3.5 px-4 rounded-xl font-bold flex items-center justify-between transition-transform hover:scale-[1.02] active:scale-95 border-2 shadow-lg bg-gradient-to-br ${getClubStyle(club.name)} relative`}
                   >
                     <div className="flex items-center gap-3">
-                      <span>Travel to {club.name}</span>
+                      <span className="text-left text-sm md:text-base leading-tight drop-shadow-sm">{club.name}</span>
                       {isDestUnderdog && (
-                        <span className="text-[10px] font-black text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-widest">
+                        <span className="text-[10px] font-black text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-widest flex-shrink-0">
                           Underdog
                         </span>
                       )}
@@ -1177,23 +1512,40 @@ export default function Home() {
           </div>
         )}
 
+        {/* GAME OVER STATES */}
         {gameState === "WON" && (
-          <div className="bg-emerald-500/10 border border-emerald-500/30 p-8 rounded-3xl flex flex-col items-center mt-4 animate-in zoom-in duration-500 backdrop-blur-md">
-            <div className="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-2">Final Score</div>
-            <div className="text-6xl font-black text-white mb-2">{calculateScore()}</div>
-            <p className="text-emerald-300/70 text-sm font-medium mb-8">
-              Completed in {chain.length} links ({chain.length}x Multiplier)
-            </p>
-            <div className="flex gap-3 w-full">
+          <div className="w-full max-w-lg bg-emerald-500/10 border border-emerald-500/30 p-8 rounded-3xl flex flex-col items-center mt-4 animate-in zoom-in duration-500 backdrop-blur-md">
+            {gameMode === "MULTIPLAYER" ? (
+               <>
+                 <div className="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-2">Match Complete</div>
+                 <div className="text-3xl md:text-5xl font-black text-white mb-2 text-center leading-tight">
+                    {multiplayerWinner === "Tie" ? "It's a Draw!" : multiplayerWinner === "Nobody" ? "Both Pipelines Burst!" : `${multiplayerWinner} Wins!`}
+                 </div>
+                 <div className="flex gap-6 my-4 text-lg md:text-xl font-bold bg-white/10 px-6 py-3 rounded-xl border border-white/20">
+                    <div className="text-indigo-400">{player1Name}: {getLiveScore(chain1)} pts</div>
+                    <div className="w-[2px] bg-white/20"></div>
+                    <div className="text-rose-400">{player2Name}: {getLiveScore(chain2)} pts</div>
+                 </div>
+               </>
+            ) : (
+               <>
+                 <div className="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-2">Final Score</div>
+                 <div className="text-6xl font-black text-white mb-2">{getLiveScore(chain)}</div>
+                 <p className="text-emerald-300/70 text-sm font-medium mb-8 mt-2">
+                   Completed in {chain.length} links ({chain.length}x Multiplier)
+                 </p>
+               </>
+            )}
+            <div className="flex gap-3 w-full mt-4">
               <button 
                 onClick={handleShare} 
                 className="flex-1 bg-gradient-to-r from-emerald-400 to-emerald-600 hover:from-emerald-300 hover:to-emerald-500 text-slate-950 font-black py-4 rounded-xl transition-all shadow-[0_0_30px_rgba(52,211,153,0.3)] hover:shadow-[0_0_40px_rgba(52,211,153,0.5)] transform hover:-translate-y-1"
               >
                 Share
               </button>
-              {gameMode === "UNLIMITED" && (
+              {(gameMode === "UNLIMITED" || gameMode === "MULTIPLAYER") && (
                 <button 
-                  onClick={startUnlimitedMode} 
+                  onClick={gameMode === "MULTIPLAYER" ? () => setShowMultiplayerSetup(true) : startUnlimitedMode} 
                   className="flex-1 bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold py-4 rounded-xl transition-all"
                 >
                   Play Again
@@ -1203,17 +1555,22 @@ export default function Home() {
           </div>
         )}
 
+        {/* LOST STATE */}
         {gameState === "LOST" && (
-          <div className="bg-red-500/10 border border-red-500/30 p-8 rounded-3xl flex flex-col items-center mt-4 animate-in zoom-in backdrop-blur-md">
+          <div className="w-full max-w-md bg-red-500/10 border border-red-500/30 p-8 rounded-3xl flex flex-col items-center mt-4 animate-in zoom-in backdrop-blur-md">
             <div className="text-4xl mb-4">💀</div>
-            <div className="text-xl font-black text-white mb-6 text-center">The Pipeline Burst.</div>
+            <div className="text-xl font-black text-white mb-2 text-center">The Pipeline Burst.</div>
+            {gameMode === "MULTIPLAYER" && (
+               <div className="text-xl md:text-2xl font-black text-emerald-400 mb-6 text-center leading-tight">{multiplayerWinner} Survives & Wins!</div>
+            )}
             <button 
               onClick={() => {
                 if (gameMode === "DAILY") startDailyMode();
                 else if (gameMode === "HARD_DAILY") startHardDailyMode();
+                else if (gameMode === "MULTIPLAYER") setShowMultiplayerSetup(true);
                 else startUnlimitedMode();
               }}
-              className="w-full bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold py-4 rounded-2xl transition-all"
+              className={`w-full ${gameMode !== "MULTIPLAYER" && 'mt-4'} bg-white/10 hover:bg-white/20 border border-white/10 text-white font-bold py-4 rounded-2xl transition-all`}
             >
               Try Again
             </button>
