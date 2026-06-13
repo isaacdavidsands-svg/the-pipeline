@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { supabase } from "./supabase";
 
 // --- Types ---
@@ -243,6 +243,24 @@ const getFlag = (nationality: string) => {
     "Poland": "🇵🇱", "Gabon": "🇬🇦", "Chile": "🇨🇱"
   };
   return flags[nationality] || "🌍";
+};
+
+// UX Tweak: Highlight search query in dropdown
+const highlightMatch = (text: string, query: string): ReactNode => {
+  if (!query.trim()) return <span className="text-slate-300">{text}</span>;
+  const regex = new RegExp(`(${query})`, 'gi');
+  const parts = text.split(regex);
+  return (
+    <span>
+      {parts.map((part, i) => 
+        regex.test(part) ? (
+          <span key={i} className="text-white font-black">{part}</span>
+        ) : (
+          <span key={i} className="text-slate-400">{part}</span>
+        )
+      )}
+    </span>
+  );
 };
 
 // --- DYNAMIC VIBRANT COLOR ENGINE ---
@@ -669,7 +687,6 @@ export default function Home() {
 
   useEffect(() => {
     const flexScoutQuery = async () => {
-      // Use activeClub directly. We know it will never be blank.
       if (searchQuery.trim().length < 3 || gameState !== "PLAYING" || isScouting || !activeClub?.name) {
         setSearchResults([]);
         return;
@@ -724,7 +741,6 @@ export default function Home() {
           setGameState("WON");
           setTimeout(() => setShowStats(true), 1500);
       } else {
-          // Pass turn to whoever is still active
           if (newP1Status === "PLAYING" && newP2Status !== "PLAYING") setCurrentTurn(1);
           else if (newP2Status === "PLAYING" && newP1Status !== "PLAYING") setCurrentTurn(2);
           else setCurrentTurn(prev => prev === 1 ? 2 : 1);
@@ -820,6 +836,9 @@ export default function Home() {
         return;
       }
 
+      // UX Tweak: Only show routing options for clubs where the player actually had > 0 appearances
+      const destinationClubsMap = new Map<string, Club>();
+      
       if (cachedPerformances.length > 0) {
           const currentClubPerformances = cachedPerformances.filter(p => {
               const teamVal = p[safeTeamKey];
@@ -853,17 +872,31 @@ export default function Home() {
               processFailure(`❌ ${player.name} played for ${activeClub.name}, but DB has no record of them there between ${activeEra.display}.`);
               return;
           }
+
+          // Build valid destinations based ONLY on clubs where apps > 0
+          cachedPerformances.forEach(p => {
+            const tName = String(p[safeTeamKey]);
+            const apps = Number(p[safePitchKey]) || 0;
+            if (isValidSeniorTeam(tName) && apps > 0 && !checkClubMatch(tName, activeClub.name)) {
+                const canonicalName = standardizeClubName(tName);
+                if (!destinationClubsMap.has(canonicalName)) {
+                    destinationClubsMap.set(canonicalName, { id: canonicalName, name: canonicalName });
+                }
+            }
+          });
       }
-      
-      const destinationClubsMap = new Map<string, Club>();
-      playerClubNames.forEach(rawClubName => {
-          if (!checkClubMatch(rawClubName, activeClub.name)) {
-              const canonicalName = standardizeClubName(rawClubName);
-              if (!destinationClubsMap.has(canonicalName)) {
-                  destinationClubsMap.set(canonicalName, { id: canonicalName, name: canonicalName });
-              }
-          }
-      });
+
+      // Fallback if performance data is missing or empty (safeguard to prevent game breaking)
+      if (destinationClubsMap.size === 0) {
+         playerClubNames.forEach(rawClubName => {
+             if (!checkClubMatch(rawClubName, activeClub.name)) {
+                 const canonicalName = standardizeClubName(rawClubName);
+                 if (!destinationClubsMap.has(canonicalName)) {
+                     destinationClubsMap.set(canonicalName, { id: canonicalName, name: canonicalName });
+                 }
+             }
+         });
+      }
 
       const uniqueOptions = Array.from(destinationClubsMap.values()).sort((a, b) => a.name.localeCompare(b.name));
 
@@ -920,12 +953,12 @@ export default function Home() {
             if (currentTurn === 1) newP1Status = "FINISHED";
             else newP2Status = "FINISHED";
             setMessage("");
-            setGameState("PLAYING"); // Fixes the missing search bar bug!
+            setGameState("PLAYING"); 
         } else if (isBust) {
             if (currentTurn === 1) newP1Status = "LOST";
             else newP2Status = "LOST";
             setActiveEra(generateEraConstraint(nextClub.name));
-            setGameState("PLAYING"); // Fixes the missing search bar bug!
+            setGameState("PLAYING"); 
         } else {
             setActiveEra(generateEraConstraint(nextClub.name));
             setGameState("PLAYING");
@@ -1440,7 +1473,7 @@ export default function Home() {
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-500">🔍</div>
                 <input
                   type="text"
-                  placeholder={`Search players from ${activeClub.name}...`}
+                  placeholder={gameMode === "MULTIPLAYER" ? `Search players from ${activeClub.name}...` : `Search players from ${activeClub.name}...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className={`w-full bg-white/5 border border-white/10 text-white pl-12 pr-4 py-4 rounded-2xl focus:bg-white/10 transition-all outline-none shadow-2xl placeholder:text-slate-500 ${
@@ -1464,7 +1497,9 @@ export default function Home() {
                         )}
                         
                         <div className="flex flex-col">
-                          <span className="text-slate-200 font-medium leading-tight">{player.name}</span>
+                          <span className="text-slate-200 font-medium leading-tight">
+                              {highlightMatch(player.name, searchQuery)}
+                          </span>
                           {player.dateOfBirth && (
                             <span className="text-slate-500 text-xs font-semibold">Born: {player.dateOfBirth}</span>
                           )}
