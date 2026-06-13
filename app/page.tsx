@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "./supabase";
+import { Analytics } from "@vercel/analytics/react";
 
 // --- Types ---
 interface Club { id: string; name: string; country?: string; }
@@ -246,7 +247,7 @@ const getFlag = (nationality: string) => {
 };
 
 // UX Tweak: Highlight search query in dropdown
-const highlightMatch = (text: string, query: string): ReactNode => {
+const highlightMatch = (text: string, query: string): React.ReactNode => {
   if (!query.trim()) return <span className="text-slate-300">{text}</span>;
   const regex = new RegExp(`(${query})`, 'gi');
   const parts = text.split(regex);
@@ -459,7 +460,6 @@ export default function Home() {
   const [targetClub, setTargetClub] = useState<Club>({ id: "", name: "" });
   const [currentDay, setCurrentDay] = useState<number>(0);
   
-  // Rules are now hardcoded to show automatically on load!
   const [showRules, setShowRules] = useState(true);
   const [showStats, setShowStats] = useState(false);
   const [stats, setStats] = useState<GameStats>({ played: 0, won: 0, currentStreak: 0, maxStreak: 0, history: [] });
@@ -687,6 +687,7 @@ export default function Home() {
 
   useEffect(() => {
     const flexScoutQuery = async () => {
+      // Use activeClub directly. We know it will never be blank.
       if (searchQuery.trim().length < 3 || gameState !== "PLAYING" || isScouting || !activeClub?.name) {
         setSearchResults([]);
         return;
@@ -741,6 +742,7 @@ export default function Home() {
           setGameState("WON");
           setTimeout(() => setShowStats(true), 1500);
       } else {
+          // Pass turn to whoever is still active
           if (newP1Status === "PLAYING" && newP2Status !== "PLAYING") setCurrentTurn(1);
           else if (newP2Status === "PLAYING" && newP1Status !== "PLAYING") setCurrentTurn(2);
           else setCurrentTurn(prev => prev === 1 ? 2 : 1);
@@ -1473,7 +1475,7 @@ export default function Home() {
                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-slate-500">🔍</div>
                 <input
                   type="text"
-                  placeholder={gameMode === "MULTIPLAYER" ? `Search players from ${activeClub.name}...` : `Search players from ${activeClub.name}...`}
+                  placeholder={`Search players from ${activeClub.name}...`}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className={`w-full bg-white/5 border border-white/10 text-white pl-12 pr-4 py-4 rounded-2xl focus:bg-white/10 transition-all outline-none shadow-2xl placeholder:text-slate-500 ${
@@ -1611,6 +1613,9 @@ export default function Home() {
             </button>
           </div>
         )}
+
+        {/* --- ADDED VERCEL ANALYTICS COMPONENT HERE --- */}
+        <Analytics />
 
       </div>
     </main>
