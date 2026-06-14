@@ -460,6 +460,7 @@ export default function Home() {
   const [targetClub, setTargetClub] = useState<Club>({ id: "", name: "" });
   const [currentDay, setCurrentDay] = useState<number>(0);
   
+  // Rules are now hardcoded to show automatically on load!
   const [showRules, setShowRules] = useState(true);
   const [showStats, setShowStats] = useState(false);
   const [stats, setStats] = useState<GameStats>({ played: 0, won: 0, currentStreak: 0, maxStreak: 0, history: [] });
@@ -1185,7 +1186,7 @@ export default function Home() {
               <div className="grid gap-4">
                 <div className="bg-white/5 border border-white/5 p-4 rounded-xl">
                   <h3 className="font-bold text-white mb-1 uppercase tracking-wider text-xs text-emerald-400">The Objective</h3>
-                  <p>Connect the starting club to the target club by linking players who share a career history. You have a maximum of <strong className="text-red-400">{MAX_LINKS} moves</strong>.</p>
+                  <p>Connect the starting club to the target club by building a chain of players who share a career history. This is usually a multi-step journey, so do not just look for one player! You have a maximum of <strong className="text-red-400">{MAX_LINKS} moves</strong>. <strong className="text-emerald-400">Aim for the highest score!</strong></p>
                 </div>
                 <div className="bg-white/5 border border-white/5 p-4 rounded-xl">
                   <h3 className="font-bold text-white mb-1 uppercase tracking-wider text-xs text-amber-400">Dynamic Era Constraints</h3>
@@ -1298,22 +1299,27 @@ export default function Home() {
 
             {/* START TO TARGET GRAPHIC */}
             <div className="flex justify-between items-center mb-8 px-4 w-full max-w-lg mx-auto">
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center z-20">
                 <span className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Start Here</span>
                 <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(startClub.name)} border border-white/20`}>
                   <span className="text-sm md:text-base leading-tight drop-shadow-md">{startClub.name}</span>
                 </div>
               </div>
               
-              <div className="flex-1 flex flex-col items-center justify-center px-2 mt-6">
-                <span className="text-[9px] md:text-[10px] uppercase tracking-widest font-black mb-2 text-slate-400 text-center">Link Players To</span>
-                <div className="w-full flex items-center">
-                  <div className="h-[2px] w-full bg-gradient-to-r from-emerald-500/10 via-emerald-500/80 to-emerald-500"></div>
-                  <div className="w-0 h-0 border-y-[5px] border-y-transparent border-l-[6px] border-l-emerald-500"></div>
+              <div className="flex-1 flex flex-col items-center justify-center px-1 md:px-2 mt-6 relative z-10">
+                <span className="text-[9px] md:text-[10px] uppercase tracking-widest font-black mb-3 text-emerald-400 text-center animate-pulse drop-shadow-md">Build a chain to</span>
+                <div className="w-full flex items-center relative">
+                  <div className="absolute left-0 w-full h-[2px] border-t-2 border-dashed border-emerald-500/40"></div>
+                  <div className="w-full flex justify-evenly px-2 md:px-4 z-10">
+                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#0B0F19] border-2 border-emerald-500/60 shadow-[0_0_5px_rgba(52,211,153,0.5)]"></div>
+                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#0B0F19] border-2 border-emerald-500/60 shadow-[0_0_5px_rgba(52,211,153,0.5)]"></div>
+                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#0B0F19] border-2 border-emerald-500/60 shadow-[0_0_5px_rgba(52,211,153,0.5)]"></div>
+                  </div>
+                  <div className="absolute right-0 w-0 h-0 border-y-[6px] border-y-transparent border-l-[8px] border-l-emerald-500 translate-x-1"></div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center z-20">
                 <span className="text-[10px] text-cyan-400 font-black uppercase tracking-widest mb-2">Target</span>
                 <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(targetClub.name)} border border-white/20`}>
                   <span className="text-sm md:text-base leading-tight drop-shadow-md">{targetClub.name}</span>
@@ -1367,22 +1373,27 @@ export default function Home() {
             
             {/* START TO TARGET GRAPHIC */}
             <div className="flex justify-between items-center mb-10 px-4 w-full max-w-lg mx-auto">
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center z-20">
                 <span className="text-[10px] text-emerald-400 font-black uppercase tracking-widest mb-2">Start Here</span>
                 <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(startClub.name)} border border-white/20`}>
                   <span className="text-sm md:text-base leading-tight drop-shadow-md">{startClub.name}</span>
                 </div>
               </div>
               
-              <div className="flex-1 flex flex-col items-center justify-center px-2 mt-6">
-                <span className="text-[9px] md:text-[10px] uppercase tracking-widest font-black mb-2 text-slate-400 text-center">Link Players To</span>
-                <div className="w-full flex items-center">
-                  <div className="h-[2px] w-full bg-gradient-to-r from-emerald-500/10 via-emerald-500/80 to-emerald-500"></div>
-                  <div className="w-0 h-0 border-y-[5px] border-y-transparent border-l-[6px] border-l-emerald-500"></div>
+              <div className="flex-1 flex flex-col items-center justify-center px-1 md:px-2 mt-6 relative z-10">
+                <span className="text-[9px] md:text-[10px] uppercase tracking-widest font-black mb-3 text-emerald-400 text-center animate-pulse drop-shadow-md">Build a chain to</span>
+                <div className="w-full flex items-center relative">
+                  <div className="absolute left-0 w-full h-[2px] border-t-2 border-dashed border-emerald-500/40"></div>
+                  <div className="w-full flex justify-evenly px-2 md:px-4 z-10">
+                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#0B0F19] border-2 border-emerald-500/60 shadow-[0_0_5px_rgba(52,211,153,0.5)]"></div>
+                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#0B0F19] border-2 border-emerald-500/60 shadow-[0_0_5px_rgba(52,211,153,0.5)]"></div>
+                     <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-[#0B0F19] border-2 border-emerald-500/60 shadow-[0_0_5px_rgba(52,211,153,0.5)]"></div>
+                  </div>
+                  <div className="absolute right-0 w-0 h-0 border-y-[6px] border-y-transparent border-l-[8px] border-l-emerald-500 translate-x-1"></div>
                 </div>
               </div>
 
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center z-20">
                 <span className="text-[10px] text-cyan-400 font-black uppercase tracking-widest mb-2">Target</span>
                 <div className={`w-24 h-24 md:w-28 md:h-28 rounded-2xl flex items-center justify-center text-center p-2 font-bold shadow-xl bg-gradient-to-br ${getClubStyle(targetClub.name)} border border-white/20`}>
                   <span className="text-sm md:text-base leading-tight drop-shadow-md">{targetClub.name}</span>
