@@ -387,28 +387,41 @@ const isMajorOrModerate = (name: string) => {
     return TIER_1_MAJOR.includes(canonical) || TIER_2_MODERATE.includes(canonical);
 };
 
-const generateEraConstraint = (clubName: string): Era => {
+// Custom Pseudo-Random function to seed the global daily puzzle
+const getSeededRandom = (seedString: string) => {
+    let hash = 0;
+    for (let i = 0; i < seedString.length; i++) {
+        hash = seedString.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const x = Math.sin(Math.abs(hash)) * 10000;
+    return x - Math.floor(x);
+};
+
+const generateEraConstraint = (clubName: string, daySeed: number = 0): Era => {
   const canonicalName = standardizeClubName(clubName);
   const isTier1 = TIER_1_MAJOR.includes(canonicalName);
   const isTier2 = TIER_2_MODERATE.includes(canonicalName);
   
-  const roll = Math.random() * 100;
+  const isDeterministic = daySeed > 0;
+  const getRand = (salt: string) => isDeterministic ? getSeededRandom(`${canonicalName}-${daySeed}-${salt}`) : Math.random();
+
+  const roll = getRand("roll") * 100;
 
   if (isTier1) {
     let startYear;
-    if (roll <= 59) startYear = Math.floor(Math.random() * (2024 - 2016 + 1)) + 2016; 
-    else if (roll <= 87) startYear = Math.floor(Math.random() * (2015 - 2009 + 1)) + 2009;
-    else startYear = Math.floor(Math.random() * (2008 - 2003 + 1)) + 2003;
+    if (roll <= 59) startYear = Math.floor(getRand("y1") * (2024 - 2016 + 1)) + 2016; 
+    else if (roll <= 87) startYear = Math.floor(getRand("y2") * (2015 - 2009 + 1)) + 2009;
+    else startYear = Math.floor(getRand("y3") * (2008 - 2003 + 1)) + 2003;
     return { start: startYear, end: startYear, display: String(startYear) };
   } else if (isTier2) {
     let startYear;
-    if (roll <= 59) startYear = Math.floor(Math.random() * (2024 - 2016 + 1)) + 2016; 
-    else if (roll <= 87) startYear = Math.floor(Math.random() * (2015 - 2009 + 1)) + 2009;
-    else startYear = Math.floor(Math.random() * (2008 - 2003 + 1)) + 2003;
+    if (roll <= 59) startYear = Math.floor(getRand("y1") * (2024 - 2016 + 1)) + 2016; 
+    else if (roll <= 87) startYear = Math.floor(getRand("y2") * (2015 - 2009 + 1)) + 2009;
+    else startYear = Math.floor(getRand("y3") * (2008 - 2003 + 1)) + 2003;
     const safeStart = Math.min(startYear, 2019); 
     return { start: safeStart, end: safeStart + 5, display: `${safeStart} - ${safeStart + 5}` };
   } else {
-    const endYear = Math.floor(Math.random() * (2024 - 2022 + 1)) + 2022; 
+    const endYear = Math.floor(getRand("yEnd") * (2024 - 2022 + 1)) + 2022; 
     const startYear = Math.max(2003, endYear - 14); 
     return { start: startYear, end: endYear, display: `${startYear} - ${endYear}` };
   }
@@ -460,7 +473,6 @@ export default function Home() {
   const [targetClub, setTargetClub] = useState<Club>({ id: "", name: "" });
   const [currentDay, setCurrentDay] = useState<number>(0);
   
-  // Rules are now hardcoded to show automatically on load!
   const [showRules, setShowRules] = useState(true);
   const [showStats, setShowStats] = useState(false);
   const [stats, setStats] = useState<GameStats>({ played: 0, won: 0, currentStreak: 0, maxStreak: 0, history: [] });
@@ -489,7 +501,7 @@ export default function Home() {
   const [p1Status, setP1Status] = useState<"PLAYING" | "FINISHED" | "LOST">("PLAYING");
   const [p2Status, setP2Status] = useState<"PLAYING" | "FINISHED" | "LOST">("PLAYING");
 
-  // Derived Active State Accessors (Ensures NO empty club desync bugs)
+  // Derived Active State Accessors 
   const derivedClubSolo = chain.length > 0 ? chain[chain.length - 1].toClub : startClub;
   const derivedClub1 = chain1.length > 0 ? chain1[chain1.length - 1].toClub : startClub;
   const derivedClub2 = chain2.length > 0 ? chain2[chain2.length - 1].toClub : startClub;
@@ -589,7 +601,7 @@ export default function Home() {
        const saved = JSON.parse(savedStr);
        if (saved.day === dayNum && saved[mode]) {
           const s = saved[mode];
-          setAnchorEra(s.anchorEra || generateEraConstraint(config.start));
+          setAnchorEra(s.anchorEra || generateEraConstraint(config.start, dayNum));
           setChain(s.chain || []);
           setFailedAttempts(s.failedAttempts || 0);
           setGameState(s.gameState || "PLAYING");
@@ -597,7 +609,7 @@ export default function Home() {
        }
     }
 
-    setAnchorEra(generateEraConstraint(config.start));
+    setAnchorEra(generateEraConstraint(config.start, dayNum));
     setChain([]);
     setFailedAttempts(0);
     setGameState("PLAYING");
@@ -985,7 +997,7 @@ export default function Home() {
           updateStats(false, 0, 0);
           setTimeout(() => setShowStats(true), 1500);
         } else {
-          setAnchorEra(generateEraConstraint(nextClub.name)); 
+          setAnchorEra(generateEraConstraint(nextClub.name, (gameMode === "DAILY" || gameMode === "HARD_DAILY") ? currentDay : 0)); 
           setGameState("PLAYING");
         }
     }
